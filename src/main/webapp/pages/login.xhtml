@@ -9,7 +9,15 @@
 </h:head>
 
 <h:body>
-
+    <h:form>
+        <h:inputText value="#{loginBean.username}" required="true" />
+        <br/>
+        <h:inputSecret value="#{loginBean.password}" required="true" />
+        <br/>
+        <h:commandButton value="submit" action="#{loginBean.tryLogin}" />
+        <br/>
+        <h:outputLabel value="#{loginBean.msg}"/>
+    </h:form>
 </h:body>
 
 </html>

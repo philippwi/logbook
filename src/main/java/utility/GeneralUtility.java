@@ -8,5 +8,8 @@ public final class GeneralUtility {
         System.err.println(e.toString());
     }
 
+    public static void encryptPassword(String pw){
+        //TODO
+    }
 
 }
