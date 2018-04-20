@@ -5,6 +5,7 @@
   <version>0.0.1-SNAPSHOT</version>
   <packaging>war</packaging>
   <dependencies>
+	  <!--JavaEE-->
   	<dependency>
   		<groupId>com.sun.faces</groupId>
   		<artifactId>jsf-impl</artifactId>
@@ -29,6 +30,8 @@
   		<version>7.0</version>
   		<scope>provided</scope>
   	</dependency>
+
+	  <!--DATABASE-->
 	  <dependency>
 		  <groupId>org.hibernate</groupId>
 		  <artifactId>hibernate-core</artifactId>
@@ -39,6 +42,23 @@
 		  <groupId>mysql</groupId>
 		  <artifactId>mysql-connector-java</artifactId>
 		  <version>6.0.6</version>
+	  </dependency>
+
+	  <!--GOOGLE-->
+	  <dependency>
+		  <groupId>com.google.maps</groupId>
+		  <artifactId>google-maps-services</artifactId>
+		  <version>0.2.7</version>
+	  </dependency>
+	  <dependency>
+		  <groupId>org.slf4j</groupId>
+		  <artifactId>slf4j-api</artifactId>
+		  <version>1.7.5</version>
+	  </dependency>
+	  <dependency>
+		  <groupId>org.slf4j</groupId>
+		  <artifactId>slf4j-log4j12</artifactId>
+		  <version>1.7.5</version>
 	  </dependency>
   </dependencies>
   <build>
