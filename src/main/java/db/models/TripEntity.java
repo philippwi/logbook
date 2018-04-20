@@ -1,23 +1,33 @@
 package db.models;
 
 import javax.persistence.*;
-import java.sql.Date;
+import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.Objects;
 
 @Entity
 @Table(name = "trip", schema = "logbook", catalog = "")
-public class TripEntity {
+public class TripEntity implements Serializable {
     private int tripId;
     private String user;
     private String origin;
     private String destination;
     private int distance;
-    private Date date;
+    private LocalDate date;
 
 
     public TripEntity(){}
 
-    public TripEntity(String usr, String org, String dest, int dist, Date dt){
+    public TripEntity(String usr, String org, String dest, int dist, LocalDate dt){
+        setUser(usr);
+        setOrigin(org);
+        setDestination(dest);
+        setDistance(dist);
+        setDate(dt);
+    }
+
+    public TripEntity(int id, String usr, String org, String dest, int dist, LocalDate dt){
+        setTripId(id);
         setUser(usr);
         setOrigin(org);
         setDestination(dest);
@@ -76,11 +86,11 @@ public class TripEntity {
 
     @Basic
     @Column(name = "Date", nullable = false)
-    public Date getDate() {
+    public LocalDate getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(LocalDate date) {
         this.date = date;
     }
 
@@ -101,5 +111,11 @@ public class TripEntity {
     public int hashCode() {
 
         return Objects.hash(tripId, user, origin, destination, distance, date);
+    }
+
+    @Override
+    public String toString(){
+        return "(" + tripId + ", " + user + ", " + origin + ", " +
+                destination+ ", " + distance + ", " + date + ")";
     }
 }

@@ -1,11 +1,12 @@
 package db.models;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Objects;
 
 @Entity
 @Table(name = "user", schema = "logbook", catalog = "")
-public class UserEntity {
+public class UserEntity implements Serializable {
     private String name;
     private String password;
     private byte admin;

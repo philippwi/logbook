@@ -4,17 +4,15 @@ import config.Configuration;
 import db.models.UserEntity;
 
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.List;
 
-import static utility.JavaUtility.handleException;
 
 public class UserManager {
 
     private EntityManagerFactory emFactory;
     private EntityManager em;
 
-    public UserManager(){
+    private UserManager(){
         emFactory = Persistence.createEntityManagerFactory(Configuration.PERSISTENCE_UNIT_NAME);
     }
 
@@ -24,6 +22,14 @@ public class UserManager {
 
     private void closeEM(){
        em.close();
+    }
+
+    public static UserManager start(){
+        return new UserManager();
+    }
+
+    public void stop(){
+        emFactory.close();
     }
 
     public List<UserEntity> getAllUsers(){
@@ -76,16 +82,15 @@ public class UserManager {
             return false;
         }
 
-
         createEM();
 
-        UserEntity user = getUser(username);
-
-        System.out.println(user);
+        UserEntity user = em.find(UserEntity.class, username);
 
         em.getTransaction().begin();
         em.remove(user);
         em.getTransaction().commit();
+
+        closeEM();
 
         return true;
     }
