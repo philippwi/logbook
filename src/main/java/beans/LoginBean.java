@@ -9,6 +9,8 @@ import javax.faces.context.FacesContext;
 import javax.inject.Named;
 import java.io.IOException;
 
+import static config.Configuration.HOME_PAGE;
+import static config.Configuration.LOGIN_PAGE;
 import static utility.GeneralUtility.handleException;
 
 @Named
@@ -41,7 +43,7 @@ public class LoginBean {
     }
 
     //methods
-    public void tryLogin(){
+    public String tryLogin(){
 
         msg = "";
 
@@ -50,7 +52,7 @@ public class LoginBean {
         //check if user exists
         if(!um.userExists(username)){
             msg = "User/Passwort-Kombination nicht gefunden";
-            return;
+            return LOGIN_PAGE;
         }
 
         UserEntity user = um.getUser(username);
@@ -58,14 +60,9 @@ public class LoginBean {
         //check if password is correct
         if(!password.equals(user.getPassword())) {
             msg = "User/Passwort-Kombination nicht gefunden";
-            return;
+            return LOGIN_PAGE;
         }
 
-        //correct credentials --> redirect to homepage
-        try {
-            FacesContext.getCurrentInstance().getExternalContext().dispatch("/pages/home.xhtml");
-        } catch (IOException e) {
-            handleException(e);
-        }
+        return HOME_PAGE;
     }
 }

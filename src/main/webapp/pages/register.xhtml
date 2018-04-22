@@ -2,25 +2,28 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:h="http://java.sun.com/jsf/html">
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://java.sun.com/jsf/html">
 
 <h:head>
-    <title>Login</title>
+    <title>Registrierung</title>
 </h:head>
 
 <h:body>
     <h:form>
-        <h:inputText value="#{loginBean.username}" required="true" />
+        <h:inputText value="#{registerBean.username}" required="true" />
         <br/>
-        <h:inputSecret value="#{loginBean.password}" required="true" />
+        <h:inputSecret value="#{registerBean.pw1}" required="true" />
+        <br/>
+        <h:inputSecret value="#{registerBean.pw2}" required="true" />
         <br/>
         <h:commandButton value="Save Changes"
                          id="withIcon"
                          type="submit"
-                         action="#{loginBean.tryLogin}"
+                         action="#{registerBean.tryRegister}"
                          icon="ui-icon-disk" ajax="false"/>
         <br/>
-        <h:outputLabel value="#{loginBean.msg}"/>
+        <h:outputLabel value="#{registerBean.msg}"/>
     </h:form>
 </h:body>
 
