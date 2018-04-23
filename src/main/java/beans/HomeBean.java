@@ -8,13 +8,14 @@ import javax.enterprise.context.RequestScoped;
 import javax.inject.Named;
 import java.text.DecimalFormat;
 import java.time.LocalDate;
+import java.util.ArrayList;
 
 import static utility.CookieManagement.getCurrentUser;
 import static utility.Tools.precisionRound;
 
 @Named
 @RequestScoped
-public class NewTripBean {
+public class HomeBean {
 
     private String origin;
     private String destination;
@@ -22,6 +23,7 @@ public class NewTripBean {
     private double distanceInKilometers;
     private LocalDate date;
 
+    private ArrayList<TripEntity> tripList;
 
     //setter & getters
     public String getOrigin() {
@@ -64,6 +66,20 @@ public class NewTripBean {
         this.date = date;
     }
 
+    public ArrayList<TripEntity> getTripList() {
+
+        TripManager tm = TripManager.start();
+
+        tripList = new ArrayList<>(
+                tm.getUserTrips("Hans"));
+
+        tm.stop();
+
+        return tripList;
+    }
+    public void setTripList(ArrayList<TripEntity> tripList) {
+        this.tripList = tripList;
+    }
 
     //methods
     public void calculateDistance() {
@@ -85,4 +101,5 @@ public class NewTripBean {
         tm.addTrip(trip);
         tm.stop();
     }
+
 }

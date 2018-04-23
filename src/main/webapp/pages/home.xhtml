@@ -10,19 +10,43 @@
 
 <h:body>
 	<h:form>
-		<h:inputText value="#{newTripBean.origin}" required="true" />
+		<h:inputText value="#{homeBean.origin}" required="true" />
 		<br/>
-		<h:inputText value="#{newTripBean.destination}" required="true" />
+		<h:inputText value="#{homeBean.destination}" required="true" />
 		<br/>
 		<br/>
 		<h:commandButton value="Distanz berechnen"
 						 type="submit"
-						 action="#{newTripBean.calculateDistance}"
+						 action="#{homeBean.calculateDistance}"
 						 ajax="false"/>
 		<br/>
-		<h:outputLabel value="#{newTripBean.distanceInKilometers} km"/>
+		<h:outputLabel value="#{homeBean.distanceInKilometers} km"/>
 	</h:form>
 
+	<br/><br/>
+
+	<h:dataTable value = "#{homeBean.tripList}" var = "trip">
+
+		<h:column>
+			<f:facet name = "header">Von</f:facet>
+			#{trip.origin}
+		</h:column>
+
+		<h:column>
+			<f:facet name = "header">Nach</f:facet>
+			#{trip.destination}
+		</h:column>
+
+		<h:column>
+			<f:facet name = "header">Distanz</f:facet>
+			#{trip.distance}
+		</h:column>
+
+		<h:column>
+			<f:facet name = "header">Datum</f:facet>
+			#{trip.date}
+		</h:column>
+	</h:dataTable>
 </h:body>
 
 </html>
