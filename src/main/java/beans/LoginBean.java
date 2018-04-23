@@ -3,17 +3,13 @@ package beans;
 import db.models.UserEntity;
 import db.operation.UserManager;
 
-import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.context.RequestScoped;
-import javax.faces.context.FacesContext;
 import javax.inject.Named;
-import java.io.IOException;
 
 import static config.Configuration.HOME_PAGE;
 import static config.Configuration.LOGIN_PAGE;
 import static config.Configuration.REGISTER_PAGE;
 import static utility.CookieManagement.setUserCookie;
-import static utility.GeneralUtility.handleException;
 
 @Named
 @RequestScoped

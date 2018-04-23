@@ -7,7 +7,7 @@ import com.google.maps.model.DistanceMatrix;
 import com.google.maps.model.TravelMode;
 
 import static config.Configuration.GOOGLE_API_KEY;
-import static utility.GeneralUtility.handleException;
+import static utility.Tools.handleException;
 
 public class DistanceProvider {
 

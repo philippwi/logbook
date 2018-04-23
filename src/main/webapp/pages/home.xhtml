@@ -9,6 +9,19 @@
 </h:head>
 
 <h:body>
+	<h:form>
+		<h:inputText value="#{newTripBean.origin}" required="true" />
+		<br/>
+		<h:inputText value="#{newTripBean.destination}" required="true" />
+		<br/>
+		<br/>
+		<h:commandButton value="Distanz berechnen"
+						 type="submit"
+						 action="#{newTripBean.calculateDistance}"
+						 ajax="false"/>
+		<br/>
+		<h:outputLabel value="#{newTripBean.distanceInKilometers} km"/>
+	</h:form>
 
 </h:body>
 

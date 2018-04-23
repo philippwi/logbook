@@ -4,13 +4,10 @@ import db.models.UserEntity;
 import db.operation.UserManager;
 
 import javax.enterprise.context.RequestScoped;
-import javax.faces.context.FacesContext;
 import javax.inject.Named;
-import java.io.IOException;
 
 import static config.Configuration.LOGIN_PAGE;
 import static config.Configuration.REGISTER_PAGE;
-import static utility.GeneralUtility.handleException;
 
 @Named
 @RequestScoped
@@ -70,6 +67,8 @@ public class RegisterBean {
         UserEntity user = new UserEntity(username, pw1, (byte)0);
 
         um.addUser(user);
+
+        um.stop();
 
         return LOGIN_PAGE;
 
