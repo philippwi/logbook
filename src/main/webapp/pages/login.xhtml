@@ -14,14 +14,18 @@
         <br/>
         <h:inputSecret value="#{loginBean.password}" required="true" />
         <br/>
-        <h:commandButton value="Save Changes"
-                         id="withIcon"
+        <h:commandButton value="Anmelden"
                          type="submit"
                          action="#{loginBean.tryLogin}"
-                         icon="ui-icon-disk" ajax="false"/>
+                         ajax="false"/>
         <br/>
         <h:outputLabel value="#{loginBean.msg}"/>
     </h:form>
+    <br/>
+    <h:commandButton value="Registrieren"
+                     type="submit"
+                     action="#{loginBean.goToRegisterPage}"
+                     ajax="false"/>
 </h:body>
 
 </html>

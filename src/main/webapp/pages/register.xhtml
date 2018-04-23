@@ -17,11 +17,10 @@
         <br/>
         <h:inputSecret value="#{registerBean.pw2}" required="true" />
         <br/>
-        <h:commandButton value="Save Changes"
-                         id="withIcon"
+        <h:commandButton value="Registrierung bestätigen"
                          type="submit"
                          action="#{registerBean.tryRegister}"
-                         icon="ui-icon-disk" ajax="false"/>
+                         ajax="false"/>
         <br/>
         <h:outputLabel value="#{registerBean.msg}"/>
     </h:form>

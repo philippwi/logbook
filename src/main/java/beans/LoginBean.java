@@ -11,6 +11,8 @@ import java.io.IOException;
 
 import static config.Configuration.HOME_PAGE;
 import static config.Configuration.LOGIN_PAGE;
+import static config.Configuration.REGISTER_PAGE;
+import static utility.CookieManagement.setUserCookie;
 import static utility.GeneralUtility.handleException;
 
 @Named
@@ -63,6 +65,12 @@ public class LoginBean {
             return LOGIN_PAGE;
         }
 
+        setUserCookie(username);
+
         return HOME_PAGE;
+    }
+
+    public String goToRegisterPage(){
+        return REGISTER_PAGE;
     }
 }
