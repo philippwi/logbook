@@ -1,6 +1,5 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-	  xmlns:ui="http://java.sun.com/jsf/facelets"
 	  xmlns:f="http://java.sun.com/jsf/core"
 	  xmlns:h="http://java.sun.com/jsf/html">
 
@@ -8,20 +7,17 @@
 	<title>Home</title>
 </h:head>
 
+<script type="text/javascript"
+		src="https://maps.googleapis.com/maps/api/js?v=3.exp&amp;libraries=places&amp;key=AIzaSyCWr_YG4zNfwED_ND9ykhtBfNWx9yRbZ-U" />
+<h:outputScript library="js" name="autocompleteOriginDestination.js" target="body"/>
+<h:outputScript library="js" name="validate.js" target="body"/>
+
 <h:body>
 
-	<h:outputScript>
-		var username = "#{homeBean.activeUser}";
-		if (username === "") {
-		    alert("Keine Berechtigung");
-		    location.href = "login.xhtml";
-		}
-	</h:outputScript>
-
 	<h:form>
-		<h:inputText value="#{homeBean.origin}" required="true" />
+		<h:inputText value="#{homeBean.origin}" required="true" id="OriginSearchTextField" type="text" size="50"></h:inputText>
 		<br/>
-		<h:inputText value="#{homeBean.destination}" required="true" />
+		<h:inputText value="#{homeBean.destination}" required="true" id="DestinationSearchTextField" type="text" size="50"></h:inputText>
 		<br/>
 		<br/>
 		<h:commandButton value="Distanz berechnen"
