@@ -21,11 +21,15 @@
         <br/>
         <h:outputLabel value="#{loginBean.msg}"/>
     </h:form>
+
     <br/>
-    <h:commandButton value="Registrieren"
+
+    <h:form>
+        <h:commandButton value="Registrieren"
                      type="submit"
                      action="#{loginBean.goToRegisterPage}"
                      ajax="false"/>
+    </h:form>
 </h:body>
 
 </html>

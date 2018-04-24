@@ -9,6 +9,15 @@
 </h:head>
 
 <h:body>
+
+	<h:outputScript>
+		var username = "#{homeBean.activeUser}";
+		if (username === "") {
+		    alert("Keine Berechtigung");
+		    location.href = "login.xhtml";
+		}
+	</h:outputScript>
+
 	<h:form>
 		<h:inputText value="#{homeBean.origin}" required="true" />
 		<br/>

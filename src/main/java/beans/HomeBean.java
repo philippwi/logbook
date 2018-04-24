@@ -6,7 +6,6 @@ import db.operation.TripManager;
 
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Named;
-import java.text.DecimalFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
@@ -22,6 +21,8 @@ public class HomeBean {
     private int distanceInMeters;
     private double distanceInKilometers;
     private LocalDate date;
+
+    private String activeUser;
 
     private ArrayList<TripEntity> tripList;
 
@@ -66,6 +67,22 @@ public class HomeBean {
         this.date = date;
     }
 
+
+    public String getActiveUser() {
+        activeUser =getCurrentUser();
+
+        if(activeUser == null) {
+            return "";
+        }
+        else{
+            return activeUser;
+        }
+    }
+
+    public void setActiveUser(String activeUser) {
+        this.activeUser = activeUser;
+    }
+
     public ArrayList<TripEntity> getTripList() {
 
         TripManager tm = TripManager.start();
@@ -95,7 +112,7 @@ public class HomeBean {
 
     public void saveIntoDB() {
 
-        TripEntity trip = new TripEntity(getCurrentUser(), origin, destination, distanceInMeters, date);
+        TripEntity trip = new TripEntity(getActiveUser(), origin, destination, distanceInMeters, date);
 
         TripManager tm = TripManager.start();
         tm.addTrip(trip);
