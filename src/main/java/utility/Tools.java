@@ -23,4 +23,20 @@ public final class Tools {
         return bd.doubleValue();
     }
 
+    public static boolean isBlankOrNull(String s){
+
+        //check if parameter is null
+        if(s == null) return true;
+
+        //check if string is empty
+        if(s.isEmpty()) return true;
+
+        //check if string consists of whitespaces only
+        if(s.trim().isEmpty()) return true;
+
+        //after all checks are negative
+        return false;
+
+    }
+
 }

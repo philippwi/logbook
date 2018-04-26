@@ -1,8 +1,9 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:h="http://java.sun.com/jsf/html">
+<!DOCTYPE html>
+<html lang="de"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
 
 <h:head>
     <title>Login</title>
@@ -10,26 +11,28 @@
 
 <h:body>
     <h:form>
-        <h:inputText value="#{loginBean.username}" required="true" />
-        <br/>
-        <h:inputSecret value="#{loginBean.password}" required="true" />
-        <br/>
-        <h:commandButton value="Anmelden"
-                         type="submit"
-                         action="#{loginBean.tryLogin}"
-                         ajax="false"/>
-        <br/>
-        <h:outputLabel value="#{loginBean.msg}"/>
+
+        <p:growl id="growl" sticky="true" showDetail="true" life="3000" />
+
+            <h:panelGrid columns="2" cellpadding="5">
+                <h:outputLabel for="username" value="Username:" />
+                <p:inputText id="username" value="#{loginBean.username}" required="true" label="username" maxlength="45"/>
+
+                <h:outputLabel for="password" value="Passwort:" />
+                <p:password id="password" value="#{loginBean.password}" required="true" label="password" maxlength="45"/>
+
+                <f:facet name="footer">
+                    <p:commandButton value="Einloggen" update="growl" action="#{loginBean.tryLogin}"/>
+                </f:facet>
+            </h:panelGrid>
+
     </h:form>
 
     <br/>
 
     <h:form>
-        <h:commandButton value="Registrieren"
-                     type="submit"
-                     action="#{loginBean.goToRegisterPage}"
-                     ajax="false"/>
+        <p:commandButton value="Registrieren" type="submit" action="#{loginBean.goToRegisterPage}" ajax="false"/>
     </h:form>
-</h:body>
 
+</h:body>
 </html>

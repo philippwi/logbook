@@ -1,57 +1,71 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
-	  xmlns:f="http://java.sun.com/jsf/core"
-	  xmlns:h="http://java.sun.com/jsf/html">
+<!DOCTYPE html>
+<html lang="de"
+	  xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:h="http://java.sun.com/jsf/html"
+	  xmlns:p="http://primefaces.org/ui"
+	  xmlns:f="http://java.sun.com/jsf/core">
 
 <h:head>
 	<title>Home</title>
 </h:head>
 
-<script type="text/javascript"
+<!--<script type="text/javascript"
 		src="https://maps.googleapis.com/maps/api/js?v=3.exp&amp;libraries=places&amp;key=AIzaSyCWr_YG4zNfwED_ND9ykhtBfNWx9yRbZ-U" />
 <h:outputScript library="js" name="autocompleteOriginDestination.js" target="body"/>
-<h:outputScript library="js" name="validate.js" target="body"/>
+<h:outputScript library="js" name="validate.js" target="body"/>-->
 
 <h:body>
 
 	<h:form>
-		<h:inputText value="#{homeBean.origin}" required="true" id="OriginSearchTextField" type="text" size="50"></h:inputText>
-		<br/>
-		<h:inputText value="#{homeBean.destination}" required="true" id="DestinationSearchTextField" type="text" size="50"></h:inputText>
-		<br/>
-		<br/>
-		<h:commandButton value="Distanz berechnen"
-						 type="submit"
-						 action="#{homeBean.calculateDistance}"
-						 ajax="false"/>
-		<br/>
-		<h:outputLabel value="#{homeBean.distanceInKilometers} km"/>
+		<p:commandButton value="Ausloggen" type="submit" action="#{homeBean.doLogout}" ajax="false"/>
 	</h:form>
 
+
+	<h:form>
+		<h:panelGrid columns="2" cellpadding="5">
+			<h:outputLabel for="origin" value="Start:" />
+			<p:inputText id="origin" value="#{homeBean.origin}" required="true" label="origin" maxlength="45"/>
+
+			<h:outputLabel for="destination" value="Ziel:" />
+			<p:inputText id="destination" value="#{homeBean.destination}" required="true" label="destination" maxlength="45"/>
+
+			<p:outputLabel for="date" value="Datum:" />
+			<p:calendar id="date" value="#{homeBean.date}" locale="de" navigator="true" pattern="dd-MM-yyyy" mask="true" />
+
+			<f:facet name="footer">
+				<p:commandButton value="Entfernung berechnen" update="distance" action="#{homeBean.calculateDistance}"/>
+			</f:facet>
+			<h:outputLabel id="distance" value="#{homeBean.distanceInKilometers} km" />
+		</h:panelGrid>
+	</h:form>
 	<br/><br/>
 
-	<h:dataTable value = "#{homeBean.tripList}" var = "trip">
+<h:form>
 
-		<h:column>
-			<f:facet name = "header">Von</f:facet>
-			#{trip.origin}
-		</h:column>
+	<f:facet name="footer">
+		<p:commandButton value="Fahrt speichern" update="distance" actionListener="#{homeBean.saveIntoDB}" disabled="true"/>
+	</f:facet>
+	<p:dataTable var = "trip"
+				 value = "#{homeBean.tripList}"
+				 emptyMessage="Keine eingetragenen Fahrten">
 
-		<h:column>
-			<f:facet name = "header">Nach</f:facet>
-			#{trip.destination}
-		</h:column>
+		<p:column headerText="Von">
+			<h:outputText value="#{trip.origin}"/>
+		</p:column>
 
-		<h:column>
-			<f:facet name = "header">Distanz</f:facet>
-			#{trip.distance}
-		</h:column>
+		<p:column headerText="Nach">
+			<h:outputText value="#{trip.destination}"/>
+		</p:column>
 
-		<h:column>
-			<f:facet name = "header">Datum</f:facet>
-			#{trip.date}
-		</h:column>
-	</h:dataTable>
+		<p:column headerText="Distanz">
+			<h:outputText value="#{trip.distance}"/>
+		</p:column>
+
+		<p:column headerText="Datum">
+			<h:outputText value="#{trip.date}"/>
+		</p:column>
+	</p:dataTable>
+</h:form>
 </h:body>
 
 </html>

@@ -4,25 +4,24 @@ import calculation.DistanceProvider;
 import db.models.TripEntity;
 import db.operation.TripManager;
 
-import javax.enterprise.context.RequestScoped;
+import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
-import static utility.CookieManagement.getCurrentUser;
+import static utility.CookieManagement.deleteUserCookie;
 import static utility.Tools.precisionRound;
 
 @Named
-@RequestScoped
-public class HomeBean {
+@SessionScoped
+public class HomeBean extends BeanBase {
 
     private String origin;
     private String destination;
     private int distanceInMeters;
     private double distanceInKilometers;
     private LocalDate date;
-
-    private String activeUser;
 
     private ArrayList<TripEntity> tripList;
 
@@ -67,33 +66,18 @@ public class HomeBean {
         this.date = date;
     }
 
-
-    public String getActiveUser() {
-        activeUser =getCurrentUser();
-
-        if(activeUser == null) {
-            return "";
-        }
-        else{
-            return activeUser;
-        }
-    }
-
-    public void setActiveUser(String activeUser) {
-        this.activeUser = activeUser;
-    }
-
     public ArrayList<TripEntity> getTripList() {
 
         TripManager tm = TripManager.start();
 
         tripList = new ArrayList<>(
-                tm.getUserTrips("Hans"));
+                tm.getUserTrips(getActiveUser()));
 
         tm.stop();
 
         return tripList;
     }
+
     public void setTripList(ArrayList<TripEntity> tripList) {
         this.tripList = tripList;
     }
@@ -108,6 +92,8 @@ public class HomeBean {
         distanceInKilometers = precisionRound(
                 distanceInMeters / 1000.0,
                 2);
+
+        System.out.println(distanceInKilometers);
     }
 
     public void saveIntoDB() {
@@ -119,4 +105,8 @@ public class HomeBean {
         tm.stop();
     }
 
+    public String doLogout(){
+        deleteUserCookie();
+        return goToLoginPage();
+    }
 }

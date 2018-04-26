@@ -6,19 +6,15 @@ import db.operation.UserManager;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Named;
 
-import static config.Configuration.HOME_PAGE;
-import static config.Configuration.LOGIN_PAGE;
-import static config.Configuration.REGISTER_PAGE;
 import static utility.CookieManagement.setUserCookie;
+import static utility.Tools.isBlankOrNull;
 
 @Named
 @RequestScoped
-public class LoginBean {
+public class LoginBean extends BeanBase {
 
     private String username;
     private String password;
-    private String msg;
-
 
     //setters & getters
     public String getUsername(){
@@ -33,40 +29,36 @@ public class LoginBean {
     public void setPassword(String pw){
         password = pw;
     }
-    public String getMsg() {
-        return msg;
-    }
-    public void setMsg(String msg) {
-        this.msg = msg;
-    }
 
     //methods
     public String tryLogin(){
 
-        msg = "";
+        //check if entered values are valid
+        if(isBlankOrNull(username) || isBlankOrNull(password)){
+            provideMessage("Info", "Ungültige Eingabewerte");
+            return goToLoginPage();
+        }
 
         UserManager um = UserManager.start();
 
         //check if user exists
         if(!um.userExists(username)){
-            msg = "User/Passwort-Kombination nicht gefunden";
-            return LOGIN_PAGE;
+            provideMessage("Info", "Nutzer existiert nicht");
+            um.stop();
+            return goToLoginPage();
         }
 
         UserEntity user = um.getUser(username);
 
         //check if password is correct
         if(!password.equals(user.getPassword())) {
-            msg = "User/Passwort-Kombination nicht gefunden";
-            return LOGIN_PAGE;
+            provideMessage("Info", "Passwort nicht korrekt");
+            um.stop();
+            return goToLoginPage();
         }
 
         setUserCookie(username);
-
-        return HOME_PAGE;
-    }
-
-    public String goToRegisterPage(){
-        return REGISTER_PAGE;
+        um.stop();
+        return goToHomePage();
     }
 }

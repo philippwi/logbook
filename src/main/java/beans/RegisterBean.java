@@ -8,16 +8,16 @@ import javax.inject.Named;
 
 import static config.Configuration.LOGIN_PAGE;
 import static config.Configuration.REGISTER_PAGE;
+import static utility.Tools.isBlankOrNull;
 
 @Named
 @RequestScoped
-public class RegisterBean {
+public class RegisterBean extends BeanBase{
 
     private String username;
     private String pw1;
     private String pw2;
     private String msg;
-
 
     //setters & getters
     public String getUsername(){
@@ -48,21 +48,27 @@ public class RegisterBean {
     //methods
     public String tryRegister(){
 
-        msg = "";
-
-        UserManager um = UserManager.start();
-
-        //check if user already exists
-        if(um.userExists(username)){
-            msg = "User existiert bereits";
+        //check if entered values are valid
+        if(isBlankOrNull(username) || isBlankOrNull(pw1) || isBlankOrNull(pw2)){
+            provideMessage("Info", "Ungültige Eingabewerte");
             return REGISTER_PAGE;
         }
 
         //check if password was entered correctly both times
         if(!pw1.equals(pw2)){
-            msg = "Passwörter stimmen nicht überein";
+            provideMessage("Info", "Passwörter stimmen nicht überein");
             return REGISTER_PAGE;
         }
+
+        UserManager um = UserManager.start();
+
+        //check if user already exists
+        if(um.userExists(username)){
+            provideMessage("Info", "Nutzer existiert bereits");
+            um.stop();
+            return REGISTER_PAGE;
+        }
+
 
         UserEntity user = new UserEntity(username, pw1, (byte)0);
 

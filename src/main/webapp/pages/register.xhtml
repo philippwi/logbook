@@ -1,9 +1,9 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:f="http://java.sun.com/jsf/core"
+<!DOCTYPE html>
+<html lang="de"
+      xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:p="http://java.sun.com/jsf/html">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
 
 <h:head>
     <title>Registrierung</title>
@@ -11,18 +11,22 @@
 
 <h:body>
     <h:form>
-        <h:inputText value="#{registerBean.username}" required="true" />
-        <br/>
-        <h:inputSecret value="#{registerBean.pw1}" required="true" />
-        <br/>
-        <h:inputSecret value="#{registerBean.pw2}" required="true" />
-        <br/>
-        <h:commandButton value="Registrierung bestätigen"
-                         type="submit"
-                         action="#{registerBean.tryRegister}"
-                         ajax="false"/>
-        <br/>
-        <h:outputLabel value="#{registerBean.msg}"/>
+        <p:growl id="growl" sticky="true" showDetail="true" life="3000" />
+
+        <h:panelGrid columns="2" cellpadding="5">
+            <h:outputLabel for="username" value="Username:" />
+            <p:inputText id="username" value="#{registerBean.username}" required="true" label="username" maxlength="45"/>
+
+            <h:outputLabel for="password" value="Passwort:" />
+            <p:password id="password" value="#{registerBean.pw1}" required="true" label="password" maxlength="45"/>
+
+            <h:outputLabel for="password2" value="Passwort bestätigen:" />
+            <p:password id="password2" value="#{registerBean.pw2}" required="true" label="password2" maxlength="45"/>
+
+            <f:facet name="footer">
+                <p:commandButton value="Registrierung bestätigen" update="growl" action="#{registerBean.tryRegister}"/>
+            </f:facet>
+        </h:panelGrid>
     </h:form>
 </h:body>
 
