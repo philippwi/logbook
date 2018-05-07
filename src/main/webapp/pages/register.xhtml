@@ -9,7 +9,12 @@
     <title>Registrierung</title>
 </h:head>
 
+<h:outputScript library="js" name="userhandling.js" target="body"/>
+
 <h:body>
+
+    <h:outputScript>checkAtOther("#{registerBean.activeUser}")</h:outputScript>
+
     <h:form>
         <p:growl id="growl" sticky="true" showDetail="true" life="3000" />
 

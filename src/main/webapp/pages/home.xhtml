@@ -12,60 +12,68 @@
 <!--<script type="text/javascript"
 		src="https://maps.googleapis.com/maps/api/js?v=3.exp&amp;libraries=places&amp;key=AIzaSyCWr_YG4zNfwED_ND9ykhtBfNWx9yRbZ-U" />
 <h:outputScript library="js" name="autocompleteOriginDestination.js" target="body"/>
-<h:outputScript library="js" name="validate.js" target="body"/>-->
+--><h:outputScript library="js" name="userhandling.js" target="body"/>
 
 <h:body>
 
-	<h:form>
+
+    <h:outputScript>checkAtHome("#{homeBean.activeUser}")</h:outputScript>
+
+    <h:form>
 		<p:commandButton value="Ausloggen" type="submit" action="#{homeBean.doLogout}" ajax="false"/>
 	</h:form>
 
-
 	<h:form>
+
+        <p:growl id="growl" sticky="true" showDetail="true" life="3000" />
+
 		<h:panelGrid columns="2" cellpadding="5">
 			<h:outputLabel for="origin" value="Start:" />
-			<p:inputText id="origin" value="#{homeBean.origin}" required="true" label="origin" maxlength="45"/>
+			<p:inputText id="origin" value="#{homeBean.origin}" label="origin" maxlength="45"/>
 
 			<h:outputLabel for="destination" value="Ziel:" />
-			<p:inputText id="destination" value="#{homeBean.destination}" required="true" label="destination" maxlength="45"/>
+			<p:inputText id="destination" value="#{homeBean.destination}" label="destination" maxlength="45"/>
 
 			<p:outputLabel for="date" value="Datum:" />
 			<p:calendar id="date" value="#{homeBean.date}" locale="de" navigator="true" pattern="dd-MM-yyyy" mask="true" />
 
-			<f:facet name="footer">
-				<p:commandButton value="Entfernung berechnen" update="distance" action="#{homeBean.calculateDistance}"/>
-			</f:facet>
-			<h:outputLabel id="distance" value="#{homeBean.distanceInKilometers} km" />
+            <f:facet name="footer">
+                <p:commandButton value="Entfernung berechnen" update="distance" action="#{homeBean.calculateDistance}"/>
+            </f:facet>
+
+            <f:facet name="footer">
+                <p:commandButton value="Fahrt speichern" update="growl triptable" actionListener="#{homeBean.saveIntoDB}"/>
+            </f:facet>
+
+			<h:outputLabel id="distance" value="#{homeBean.distance} km" />
 		</h:panelGrid>
+
+
+        <p:dataTable id="triptable"
+                     var = "trip"
+                     value = "#{homeBean.tripList}"
+                     emptyMessage="Keine eingetragenen Fahrten">
+
+            <p:column headerText="Von">
+                <h:outputText value="#{trip.origin}"/>
+            </p:column>
+
+            <p:column headerText="Nach">
+                <h:outputText value="#{trip.destination}"/>
+            </p:column>
+
+            <p:column headerText="Distanz">
+                <h:outputText value="#{trip.distance}"/>
+            </p:column>
+
+            <p:column headerText="Datum">
+                <h:outputText value="#{trip.date}"/>
+            </p:column>
+        </p:dataTable>
+
 	</h:form>
 	<br/><br/>
 
-<h:form>
-
-	<f:facet name="footer">
-		<p:commandButton value="Fahrt speichern" update="distance" actionListener="#{homeBean.saveIntoDB}" disabled="true"/>
-	</f:facet>
-	<p:dataTable var = "trip"
-				 value = "#{homeBean.tripList}"
-				 emptyMessage="Keine eingetragenen Fahrten">
-
-		<p:column headerText="Von">
-			<h:outputText value="#{trip.origin}"/>
-		</p:column>
-
-		<p:column headerText="Nach">
-			<h:outputText value="#{trip.destination}"/>
-		</p:column>
-
-		<p:column headerText="Distanz">
-			<h:outputText value="#{trip.distance}"/>
-		</p:column>
-
-		<p:column headerText="Datum">
-			<h:outputText value="#{trip.date}"/>
-		</p:column>
-	</p:dataTable>
-</h:form>
 </h:body>
 
 </html>

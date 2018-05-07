@@ -38,7 +38,7 @@ CREATE TABLE `logbook`.`trip` (
   `User` VARCHAR(45) NOT NULL,
   `Origin` VARCHAR(45) NOT NULL,
   `Destination` VARCHAR(45) NOT NULL,
-  `Distance` INT NOT NULL,
+  `Distance` FLOAT(6,1) NOT NULL,
   `Date` DATE NOT NULL,
   PRIMARY KEY (`TripID`));
 

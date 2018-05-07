@@ -12,13 +12,13 @@ public class TripEntity implements Serializable {
     private String user;
     private String origin;
     private String destination;
-    private int distance;
+    private float distance;
     private LocalDate date;
 
 
     public TripEntity(){}
 
-    public TripEntity(String usr, String org, String dest, int dist, LocalDate dt){
+    public TripEntity(String usr, String org, String dest, float dist, LocalDate dt){
         setUser(usr);
         setOrigin(org);
         setDestination(dest);
@@ -26,7 +26,7 @@ public class TripEntity implements Serializable {
         setDate(dt);
     }
 
-    public TripEntity(int id, String usr, String org, String dest, int dist, LocalDate dt){
+    public TripEntity(int id, String usr, String org, String dest, float dist, LocalDate dt){
         setTripId(id);
         setUser(usr);
         setOrigin(org);
@@ -76,11 +76,11 @@ public class TripEntity implements Serializable {
 
     @Basic
     @Column(name = "Distance", nullable = false)
-    public int getDistance() {
+    public float getDistance() {
         return distance;
     }
 
-    public void setDistance(int distance) {
+    public void setDistance(float distance) {
         this.distance = distance;
     }
 

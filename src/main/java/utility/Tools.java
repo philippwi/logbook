@@ -1,7 +1,14 @@
 package utility;
 
+import db.models.TripEntity;
+
+import javax.ejb.Local;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.Date;
+import java.util.List;
 
 public final class Tools {
 
@@ -15,12 +22,12 @@ public final class Tools {
         //TODO
     }
 
-    public static double precisionRound(double value, int places) {
+    public static float precisionRound(float value, int places) {
         if (places < 0) throw new IllegalArgumentException();
 
-        BigDecimal bd = new BigDecimal(Double.toString(value));
+        BigDecimal bd = new BigDecimal(Float.toString(value));
         bd = bd.setScale(places, RoundingMode.HALF_UP);
-        return bd.doubleValue();
+        return bd.floatValue();
     }
 
     public static boolean isBlankOrNull(String s){
@@ -39,4 +46,16 @@ public final class Tools {
 
     }
 
+    public static boolean isValidDate(Date dt){
+
+        LocalDate date = dt.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+
+        if(date == null) return false;
+
+        if(date.isBefore(LocalDate.parse("1900-01-01"))) return false;
+
+        if(date.isAfter(LocalDate.now().plusDays(1))) return false;
+
+        return true;
+    }
 }

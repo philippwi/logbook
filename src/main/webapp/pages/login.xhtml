@@ -9,8 +9,12 @@
     <title>Login</title>
 </h:head>
 
+<h:outputScript library="js" name="userhandling.js" target="body"/>
+
 <h:body>
     <h:form>
+
+        <h:outputScript>checkAtOther("#{loginBean.activeUser}")</h:outputScript>
 
         <p:growl id="growl" sticky="true" showDetail="true" life="3000" />
 

@@ -6,11 +6,14 @@ import db.operation.TripManager;
 
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
-import java.io.Serializable;
 import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.Date;
 
 import static utility.CookieManagement.deleteUserCookie;
+import static utility.Tools.isBlankOrNull;
+import static utility.Tools.isValidDate;
 import static utility.Tools.precisionRound;
 
 @Named
@@ -19,9 +22,8 @@ public class HomeBean extends BeanBase {
 
     private String origin;
     private String destination;
-    private int distanceInMeters;
-    private double distanceInKilometers;
-    private LocalDate date;
+    private float distance;
+    private Date date;
 
     private ArrayList<TripEntity> tripList;
 
@@ -42,27 +44,19 @@ public class HomeBean extends BeanBase {
         this.destination = destination;
     }
 
-    public int getDistanceInMeters() {
-        return distanceInMeters;
+    public float getDistance() {
+        return distance;
     }
 
-    public void setDistanceInMeters(int distanceInMeters) {
-        this.distanceInMeters = distanceInMeters;
+    public void setDistance(float distance) {
+        this.distance = distance;
     }
 
-    public double getDistanceInKilometers() {
-        return distanceInKilometers;
-    }
-
-    public void setDistanceInKilometers(double distanceInKilometers) {
-        this.distanceInKilometers = distanceInKilometers;
-    }
-
-    public LocalDate getDate() {
+    public Date getDate() {
         return date;
     }
 
-    public void setDate(LocalDate date) {
+    public void setDate(Date date) {
         this.date = date;
     }
 
@@ -82,23 +76,35 @@ public class HomeBean extends BeanBase {
         this.tripList = tripList;
     }
 
+
     //methods
     public void calculateDistance() {
 
         DistanceProvider dp = new DistanceProvider();
 
-        distanceInMeters = (int) dp.getDistance(origin, destination);
+        int distanceInMeters = (int) dp.getDistance(origin, destination);
 
-        distanceInKilometers = precisionRound(
-                distanceInMeters / 1000.0,
-                2);
+        distance = precisionRound(
+                distanceInMeters / (float)1000.0,
+                1);
 
-        System.out.println(distanceInKilometers);
+        System.out.println(distance);
     }
 
     public void saveIntoDB() {
 
-        TripEntity trip = new TripEntity(getActiveUser(), origin, destination, distanceInMeters, date);
+        if(!isValidDate(date)){
+            provideMessage("Info", "Datum ungültig");
+            return;
+        }
+
+        if(isBlankOrNull(origin) || isBlankOrNull(destination)){
+            provideMessage("Info", "Bitte erst alle Felder ausfüllen und Distanz berechnen lassen");
+            return;
+        }
+
+        LocalDate dt = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        TripEntity trip = new TripEntity(getActiveUser(), origin, destination, distance, dt);
 
         TripManager tm = TripManager.start();
         tm.addTrip(trip);
@@ -109,4 +115,5 @@ public class HomeBean extends BeanBase {
         deleteUserCookie();
         return goToLoginPage();
     }
+
 }
