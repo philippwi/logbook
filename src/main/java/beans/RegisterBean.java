@@ -8,6 +8,7 @@ import javax.inject.Named;
 
 import static config.Configuration.LOGIN_PAGE;
 import static config.Configuration.REGISTER_PAGE;
+import static utility.Tools.getHash;
 import static utility.Tools.isBlankOrNull;
 
 @Named
@@ -70,7 +71,7 @@ public class RegisterBean extends BeanBase{
         }
 
 
-        UserEntity user = new UserEntity(username, pw1, (byte)0);
+        UserEntity user = new UserEntity(username, getHash(pw1), (byte)0);
 
         um.addUser(user);
 

@@ -29,26 +29,6 @@ public final class CookieManagement {
         FacesContext.getCurrentInstance()
                 .getExternalContext()
                 .addResponseCookie(usercookieName, "", properties);
-
-        /*try {
-            Cookie usercookie = (Cookie)
-                    FacesContext.getCurrentInstance()
-                            .getExternalContext()
-                            .getRequestCookieMap()
-                            .get(usercookieName);
-
-            String cookieValue = usercookie.getValue();
-
-            if(!isBlankOrNull(cookieValue)){
-                usercookie.setValue("");
-                usercookie.setMaxAge(0);
-            }
-
-        } catch (NullPointerException ignored){
-            //when the cookie has not been set
-        } catch (Exception e){
-            handleException(e);
-        }*/
     }
 
     public static String getCurrentUser(){

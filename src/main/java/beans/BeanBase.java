@@ -15,7 +15,7 @@ abstract class BeanBase implements Serializable {
     private String activeUser;
 
     public String getActiveUser() {
-        activeUser =getCurrentUser();
+        activeUser = getCurrentUser();
 
         if(activeUser == null) {
             return "";

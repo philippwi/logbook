@@ -9,12 +9,15 @@
     <title>Login</title>
 </h:head>
 
-<h:outputScript library="js" name="userhandling.js" target="body"/>
 
 <h:body>
+    <h:outputScript>
+        if("#{homeBean.activeUser}"!== "")
+        {
+        location.href = "http://localhost:8080/logbook/pages/home.xhtml";
+        }
+    </h:outputScript>
     <h:form>
-
-        <h:outputScript>checkAtOther("#{loginBean.activeUser}")</h:outputScript>
 
         <p:growl id="growl" sticky="true" showDetail="true" life="3000" />
 

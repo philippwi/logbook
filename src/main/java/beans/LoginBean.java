@@ -7,6 +7,7 @@ import javax.enterprise.context.RequestScoped;
 import javax.inject.Named;
 
 import static utility.CookieManagement.setUserCookie;
+import static utility.Tools.getHash;
 import static utility.Tools.isBlankOrNull;
 
 @Named
@@ -51,14 +52,14 @@ public class LoginBean extends BeanBase {
         UserEntity user = um.getUser(username);
 
         //check if password is correct
-        if(!password.equals(user.getPassword())) {
+        if(!getHash(password).equals(user.getPassword())) {
             provideMessage("Info", "Passwort nicht korrekt");
             um.stop();
             return goToLoginPage();
         }
 
         setUserCookie(username);
-        um.stop();
+
         return goToHomePage();
     }
 }

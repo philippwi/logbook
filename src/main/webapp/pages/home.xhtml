@@ -11,13 +11,16 @@
 
 <!--<script type="text/javascript"
 		src="https://maps.googleapis.com/maps/api/js?v=3.exp&amp;libraries=places&amp;key=AIzaSyCWr_YG4zNfwED_ND9ykhtBfNWx9yRbZ-U" />
-<h:outputScript library="js" name="autocompleteOriginDestination.js" target="body"/>
---><h:outputScript library="js" name="userhandling.js" target="body"/>
+<h:outputScript library="js" name="autocompleteOriginDestination.js" target="body"/>-->
 
 <h:body>
 
-
-    <h:outputScript>checkAtHome("#{homeBean.activeUser}")</h:outputScript>
+    <h:outputScript>
+    if("#{homeBean.activeUser}"=== "")
+        {
+        location.href = "http://localhost:8080/logbook/pages/login.xhtml";
+        }
+    </h:outputScript>
 
     <h:form>
 		<p:commandButton value="Ausloggen" type="submit" action="#{homeBean.doLogout}" ajax="false"/>

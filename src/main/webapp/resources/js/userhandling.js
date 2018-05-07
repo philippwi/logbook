@@ -7,6 +7,7 @@ function checkAtHome(username) {
 }
 
 function checkAtOther(username) {
+    alert("ok");
     if (username !== "")
     {
         location.href = "home.xhtml";

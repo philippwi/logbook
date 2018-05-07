@@ -1,14 +1,10 @@
 package utility;
 
-import db.models.TripEntity;
-
-import javax.ejb.Local;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Date;
-import java.util.List;
 
 public final class Tools {
 
@@ -18,8 +14,11 @@ public final class Tools {
         System.err.println(e.toString());
     }
 
-    public static void encryptPassword(String pw){
-        //TODO
+    public static String getHash(String pw){
+
+        if(isBlankOrNull(pw)) return "";
+
+        return Integer.toString(pw.hashCode());
     }
 
     public static float precisionRound(float value, int places) {
