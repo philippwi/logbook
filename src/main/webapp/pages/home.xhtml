@@ -10,7 +10,7 @@
     <h:outputScript library="js" name="autocompletion.js" target="body"/>
     <h:outputScript library="js" name="redirection.js" target="head"/>
     <h:outputScript>
-        redirectIfNotLoggedIn("#{homeBean.activeUser}", "#{homeBean.webpageURL}"+"#{homeBean.loginPage}")
+        redirectIfNotLoggedIn("#{homeBean.activeUser}","#{homeBean.webpageURL}"+"#{homeBean.loginPage}")
     </h:outputScript>
     <script type="text/javascript"
             src="https://maps.googleapis.com/maps/api/js?v=3.exp&amp;libraries=places&amp;key=#{homeBean.googleApiKey}"/>
@@ -59,7 +59,7 @@
                                  value="Fahrt speichern"
                                  update="growl calculationForm tripsForm savingForm "
                                  disabled="#{!homeBean.validTrip}"
-                                 actionListener="#{homeBean.saveIntoDB}"/>
+                                 action="#{homeBean.saveIntoDB}"/>
             </f:facet>
         </p:panelGrid>
     </h:form>

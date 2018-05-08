@@ -1,32 +1,27 @@
 package beans;
 
+import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
+import javax.inject.Named;
 
 import java.io.Serializable;
 
 import static config.Configuration.*;
 import static utility.CookieManagement.getCurrentUser;
 
-abstract class BeanBase implements Serializable {
+@Named
+@RequestScoped
+public class BaseBean implements Serializable {
 
-    private final String host =  HOST;
-    private final int port =  PORT;
     private final String googleApiKey = GOOGLE_API_KEY;
-    private final String webpageURL = WEBPAGE_URL;
-    private final String loginPage = LOGIN_PAGE;
-    private final String registerPage = REGISTER_PAGE;
-    private final String homePage = HOME_PAGE;
+
+    final String webpageURL = WEBPAGE_URL;
+    final String loginPage = LOGIN_PAGE;
+    final String registerPage = REGISTER_PAGE;
+    final String homePage = HOME_PAGE;
 
     private String activeUser;
-
-    public String getHost() {
-        return host;
-    }
-
-    public int getPort() {
-        return port;
-    }
 
     public String getGoogleApiKey() {
         return googleApiKey;
@@ -35,7 +30,6 @@ abstract class BeanBase implements Serializable {
     public String getWebpageURL() {
         return webpageURL;
     }
-
     public String getLoginPage() {
         return loginPage;
     }
@@ -51,10 +45,9 @@ abstract class BeanBase implements Serializable {
     public String getActiveUser() {
         activeUser = getCurrentUser();
 
-        if(activeUser == null) {
+        if (activeUser == null) {
             return "";
-        }
-        else{
+        } else {
             return activeUser;
         }
     }
@@ -66,17 +59,5 @@ abstract class BeanBase implements Serializable {
     void provideMessage(String title, String msg) {
         FacesContext context = FacesContext.getCurrentInstance();
         context.addMessage(null, new FacesMessage(title, msg));
-    }
-
-    public String goToLoginPage(){
-        return loginPage;
-    }
-
-    public String goToRegisterPage(){
-        return registerPage;
-    }
-
-    public String goToHomePage(){
-        return homePage;
     }
 }

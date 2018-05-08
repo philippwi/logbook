@@ -12,7 +12,7 @@ import static utility.Tools.isBlankOrNull;
 
 @Named
 @RequestScoped
-public class LoginBean extends BeanBase {
+public class LoginBean extends BaseBean {
 
     private String username;
     private String password;
@@ -37,7 +37,7 @@ public class LoginBean extends BeanBase {
         //check if entered values are valid
         if(isBlankOrNull(username) || isBlankOrNull(password)){
             provideMessage("Info", "Ungültige Eingabewerte");
-            return goToLoginPage();
+            return loginPage;
         }
 
         UserManager um = UserManager.start();
@@ -46,7 +46,7 @@ public class LoginBean extends BeanBase {
         if(!um.userExists(username)){
             provideMessage("Info", "Nutzer existiert nicht");
             um.stop();
-            return goToLoginPage();
+            return loginPage;
         }
 
         UserEntity user = um.getUser(username);
@@ -55,11 +55,11 @@ public class LoginBean extends BeanBase {
         if(!getHash(password).equals(user.getPassword())) {
             provideMessage("Info", "Passwort nicht korrekt");
             um.stop();
-            return goToLoginPage();
+            return loginPage;
         }
 
         setUserCookie(username);
 
-        return goToHomePage();
+        return homePage;
     }
 }

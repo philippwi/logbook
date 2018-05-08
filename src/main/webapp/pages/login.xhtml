@@ -38,10 +38,7 @@
 
     <br/>
 
-    <h:form id="redirectForm">
-        <p:commandButton id="goToRegisterPage" value="Registrieren" type="submit" action="#{loginBean.goToRegisterPage}"
-                         ajax="false"/>
-    </h:form>
+    <p:button value="Registrieren" outcome="#{loginBean.registerPage}"/>
 
 </h:body>
 </html>

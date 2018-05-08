@@ -18,7 +18,7 @@ import static utility.Tools.precisionRound;
 
 @Named
 @SessionScoped
-public class HomeBean extends BeanBase {
+public class HomeBean extends BaseBean {
 
     private String origin;
     private String destination;
@@ -114,7 +114,6 @@ public class HomeBean extends BeanBase {
             return;
         }
 
-
         LocalDate dt = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
         TripEntity trip = new TripEntity(getActiveUser(), origin, destination, distance, dt);
 
@@ -127,7 +126,7 @@ public class HomeBean extends BeanBase {
 
     public String doLogout(){
         deleteUserCookie();
-        return goToLoginPage();
+        return loginPage;
     }
 
     private void resetValues(){

@@ -6,14 +6,12 @@ import db.operation.UserManager;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Named;
 
-import static config.Configuration.LOGIN_PAGE;
-import static config.Configuration.REGISTER_PAGE;
 import static utility.Tools.getHash;
 import static utility.Tools.isBlankOrNull;
 
 @Named
 @RequestScoped
-public class RegisterBean extends BeanBase{
+public class RegisterBean extends BaseBean {
 
     private String username;
     private String pw1;
@@ -52,13 +50,13 @@ public class RegisterBean extends BeanBase{
         //check if entered values are valid
         if(isBlankOrNull(username) || isBlankOrNull(pw1) || isBlankOrNull(pw2)){
             provideMessage("Info", "Ungültige Eingabewerte");
-            return REGISTER_PAGE;
+            return registerPage;
         }
 
         //check if password was entered correctly both times
         if(!pw1.equals(pw2)){
             provideMessage("Info", "Passwörter stimmen nicht überein");
-            return REGISTER_PAGE;
+            return registerPage;
         }
 
         UserManager um = UserManager.start();
@@ -67,7 +65,7 @@ public class RegisterBean extends BeanBase{
         if(um.userExists(username)){
             provideMessage("Info", "Nutzer existiert bereits");
             um.stop();
-            return REGISTER_PAGE;
+            return registerPage;
         }
 
 
@@ -77,7 +75,7 @@ public class RegisterBean extends BeanBase{
 
         um.stop();
 
-        return LOGIN_PAGE;
+        return loginPage;
 
     }
 }
