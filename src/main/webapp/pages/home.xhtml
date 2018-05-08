@@ -7,17 +7,19 @@
 
 <h:head>
     <title>Home</title>
-
-    <h:outputScript type="text/javascript"
-                    src="https://maps.googleapis.com/maps/api/js?v=3.exp&amp;libraries=places&amp;key=#{homeBean.googleApiKey}"/>
     <h:outputScript library="js" name="autocompletion.js" target="body"/>
     <h:outputScript library="js" name="redirection.js" target="head"/>
     <h:outputScript>
         redirectIfNotLoggedIn("#{homeBean.activeUser}", "#{homeBean.webpageURL}"+"#{homeBean.loginPage}")
     </h:outputScript>
+    <script type="text/javascript"
+            src="https://maps.googleapis.com/maps/api/js?v=3.exp&amp;libraries=places&amp;key=#{homeBean.googleApiKey}"/>
 </h:head>
 
 <h:body>
+
+    <p:growl id="growl" sticky="true" showDetail="true" life="3000"/>
+
     <h:form id="redirectForm">
         <p:commandButton id="goToLoginPage"
                          value="Ausloggen"
@@ -27,7 +29,6 @@
     </h:form>
 
     <h:form id="calculationForm">
-        <p:growl id="growl" sticky="true" showDetail="true" life="3000"/>
         <p:panelGrid id="calculationPanel" columns="2" cellpadding="5">
             <h:outputLabel for="originInput" value="Start:"/>
             <p:inputText id="originInput" value="#{homeBean.origin}" maxlength="45"/>
@@ -41,11 +42,13 @@
             <f:facet name="footer">
                 <p:commandButton id="executeButton"
                                  value="Entfernung berechnen"
-                                 update="growl distanceLabel saveButton"
+                                 update="growl distanceLabel savingForm"
                                  action="#{homeBean.calculateDistance}"/>
             </f:facet>
         </p:panelGrid>
+    </h:form>
 
+    <h:form id="savingForm">
         <p:panelGrid id="savingPanel" columns="2" cellpadding="5">
             <p:outputLabel for="dateInput" value="Datum:"/>
             <p:calendar id="dateInput" value="#{homeBean.date}" locale="de" navigator="true" pattern="dd-MM-yyyy"
@@ -54,7 +57,7 @@
             <f:facet name="footer">
                 <p:commandButton id="saveButton"
                                  value="Fahrt speichern"
-                                 update="growl tripsForm calculationForm"
+                                 update="growl calculationForm tripsForm savingForm "
                                  disabled="#{!homeBean.validTrip}"
                                  actionListener="#{homeBean.saveIntoDB}"/>
             </f:facet>

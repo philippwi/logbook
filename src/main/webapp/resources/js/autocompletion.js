@@ -4,6 +4,6 @@ var destinationInput = document.getElementById('calculationForm:destinationInput
 
 var options = {componentRestrictions: {types: 'cities'}};
 
-google.maps.places.Autocomplete(originInput, options);
+new google.maps.places.Autocomplete(originInput, options);
 
-google.maps.places.Autocomplete(destinationInput, options);
+new google.maps.places.Autocomplete(destinationInput, options);

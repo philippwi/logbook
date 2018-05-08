@@ -105,15 +105,15 @@ public class HomeBean extends BeanBase {
 
     public void saveIntoDB() {
 
+        if(distance == 0 || isBlankOrNull(origin) || isBlankOrNull(destination)){
+            provideMessage("Info", "Bitte erst alle Felder ausfüllen und Distanz berechnen lassen");
+            return;
+        }
         if(!isValidDate(date)){
             provideMessage("Info", "Datum ungültig");
             return;
         }
 
-        if(isBlankOrNull(origin) || isBlankOrNull(destination)){
-            provideMessage("Info", "Bitte erst alle Felder ausfüllen und Distanz berechnen lassen");
-            return;
-        }
 
         LocalDate dt = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
         TripEntity trip = new TripEntity(getActiveUser(), origin, destination, distance, dt);
