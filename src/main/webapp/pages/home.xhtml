@@ -1,60 +1,70 @@
 <!DOCTYPE html>
 <html lang="de"
-	  xmlns="http://www.w3.org/1999/xhtml"
-	  xmlns:h="http://java.sun.com/jsf/html"
-	  xmlns:p="http://primefaces.org/ui"
-	  xmlns:f="http://java.sun.com/jsf/core">
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
 
 <h:head>
-	<title>Home</title>
+    <title>Home</title>
+
+    <h:outputScript type="text/javascript"
+                    src="https://maps.googleapis.com/maps/api/js?v=3.exp&amp;libraries=places&amp;key=#{homeBean.googleApiKey}"/>
+    <h:outputScript library="js" name="autocompletion.js" target="body"/>
+    <h:outputScript library="js" name="redirection.js" target="head"/>
+    <h:outputScript>
+        redirectIfNotLoggedIn("#{homeBean.activeUser}", "#{homeBean.webpageURL}"+"#{homeBean.loginPage}")
+    </h:outputScript>
 </h:head>
 
-<!--<script type="text/javascript"
-		src="https://maps.googleapis.com/maps/api/js?v=3.exp&amp;libraries=places&amp;key=AIzaSyCWr_YG4zNfwED_ND9ykhtBfNWx9yRbZ-U" />
-<h:outputScript library="js" name="autocompleteOriginDestination.js" target="body"/>-->
-
 <h:body>
+    <h:form id="redirectForm">
+        <p:commandButton id="goToLoginPage"
+                         value="Ausloggen"
+                         type="submit"
+                         action="#{homeBean.doLogout}"
+                         ajax="false"/>
+    </h:form>
 
-    <h:outputScript>
-    if("#{homeBean.activeUser}"=== "")
-        {
-        location.href = "http://localhost:8080/logbook/pages/login.xhtml";
-        }
-    </h:outputScript>
+    <h:form id="calculationForm">
+        <p:growl id="growl" sticky="true" showDetail="true" life="3000"/>
+        <p:panelGrid id="calculationPanel" columns="2" cellpadding="5">
+            <h:outputLabel for="originInput" value="Start:"/>
+            <p:inputText id="originInput" value="#{homeBean.origin}" maxlength="45"/>
 
-    <h:form>
-		<p:commandButton value="Ausloggen" type="submit" action="#{homeBean.doLogout}" ajax="false"/>
-	</h:form>
+            <h:outputLabel for="destinationInput" value="Ziel:"/>
+            <p:inputText id="destinationInput" value="#{homeBean.destination}" maxlength="45"/>
 
-	<h:form>
-
-        <p:growl id="growl" sticky="true" showDetail="true" life="3000" />
-
-		<h:panelGrid columns="2" cellpadding="5">
-			<h:outputLabel for="origin" value="Start:" />
-			<p:inputText id="origin" value="#{homeBean.origin}" label="origin" maxlength="45"/>
-
-			<h:outputLabel for="destination" value="Ziel:" />
-			<p:inputText id="destination" value="#{homeBean.destination}" label="destination" maxlength="45"/>
-
-			<p:outputLabel for="date" value="Datum:" />
-			<p:calendar id="date" value="#{homeBean.date}" locale="de" navigator="true" pattern="dd-MM-yyyy" mask="true" />
+            <h:outputLabel for="distanceLabel" value="Distanz:"/>
+            <h:outputLabel id="distanceLabel" value="#{homeBean.distance} km"/>
 
             <f:facet name="footer">
-                <p:commandButton value="Entfernung berechnen" update="distance" action="#{homeBean.calculateDistance}"/>
+                <p:commandButton id="executeButton"
+                                 value="Entfernung berechnen"
+                                 update="growl distanceLabel saveButton"
+                                 action="#{homeBean.calculateDistance}"/>
             </f:facet>
+        </p:panelGrid>
+
+        <p:panelGrid id="savingPanel" columns="2" cellpadding="5">
+            <p:outputLabel for="dateInput" value="Datum:"/>
+            <p:calendar id="dateInput" value="#{homeBean.date}" locale="de" navigator="true" pattern="dd-MM-yyyy"
+                        mask="true"/>
 
             <f:facet name="footer">
-                <p:commandButton value="Fahrt speichern" update="growl triptable" actionListener="#{homeBean.saveIntoDB}"/>
+                <p:commandButton id="saveButton"
+                                 value="Fahrt speichern"
+                                 update="growl tripsForm calculationForm"
+                                 disabled="#{!homeBean.validTrip}"
+                                 actionListener="#{homeBean.saveIntoDB}"/>
             </f:facet>
+        </p:panelGrid>
+    </h:form>
 
-			<h:outputLabel id="distance" value="#{homeBean.distance} km" />
-		</h:panelGrid>
-
-
-        <p:dataTable id="triptable"
-                     var = "trip"
-                     value = "#{homeBean.tripList}"
+    <h:form id="tripsForm">
+        <p:dataTable id="tripTable"
+                     var="trip"
+                     value="#{homeBean.tripList}"
                      emptyMessage="Keine eingetragenen Fahrten">
 
             <p:column headerText="Von">
@@ -73,10 +83,6 @@
                 <h:outputText value="#{trip.date}"/>
             </p:column>
         </p:dataTable>
-
-	</h:form>
-	<br/><br/>
-
+    </h:form>
 </h:body>
-
 </html>

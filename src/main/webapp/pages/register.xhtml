@@ -7,34 +7,34 @@
 
 <h:head>
     <title>Registrierung</title>
+
+    <h:outputScript library="js" name="redirection.js" target="head"/>
+    <h:outputScript>
+        redirectIfLoggedIn("#{registerBean.activeUser}", "#{registerBean.webpageURL}"+"#{registerBean.homePage}")
+    </h:outputScript>
 </h:head>
 
-
 <h:body>
-    <h:outputScript>
-        if("#{homeBean.activeUser}"!== "")
-        {
-        location.href = "http://localhost:8080/logbook/pages/home.xhtml";
-        }
-    </h:outputScript>
-    <h:form>
-        <p:growl id="growl" sticky="true" showDetail="true" life="3000" />
+    <h:form id="registerForm">
+        <p:growl id="growl" sticky="true" showDetail="true" life="3000"/>
 
-        <h:panelGrid columns="2" cellpadding="5">
-            <h:outputLabel for="username" value="Username:" />
-            <p:inputText id="username" value="#{registerBean.username}" required="true" label="username" maxlength="45"/>
+        <p:panelGrid id="panelGrid" columns="2" cellpadding="5">
+            <h:outputLabel for="usernameInput" value="Username:"/>
+            <p:inputText id="usernameInput" value="#{registerBean.username}" required="true" maxlength="45"/>
 
-            <h:outputLabel for="password" value="Passwort:" />
-            <p:password id="password" value="#{registerBean.pw1}" required="true" label="password" maxlength="45"/>
+            <h:outputLabel for="pwInput" value="Passwort:"/>
+            <p:password id="pwInput" value="#{registerBean.pw1}" required="true" maxlength="45"/>
 
-            <h:outputLabel for="password2" value="Passwort bestätigen:" />
-            <p:password id="password2" value="#{registerBean.pw2}" required="true" label="password2" maxlength="45"/>
+            <h:outputLabel for="pwInput2" value="Passwort bestätigen:"/>
+            <p:password id="pwInput2" value="#{registerBean.pw2}" required="true" maxlength="45"/>
 
             <f:facet name="footer">
-                <p:commandButton value="Registrierung bestätigen" update="growl" action="#{registerBean.tryRegister}"/>
+                <p:commandButton id="submitButton"
+                                 value="Registrierung bestätigen"
+                                 update="growl"
+                                 action="#{registerBean.tryRegister}"/>
             </f:facet>
-        </h:panelGrid>
+        </p:panelGrid>
     </h:form>
 </h:body>
-
 </html>

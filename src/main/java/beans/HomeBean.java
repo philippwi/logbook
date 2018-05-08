@@ -25,6 +25,8 @@ public class HomeBean extends BeanBase {
     private float distance;
     private Date date;
 
+    private boolean validTrip;
+
     private ArrayList<TripEntity> tripList;
 
     //setter & getters
@@ -60,6 +62,10 @@ public class HomeBean extends BeanBase {
         this.date = date;
     }
 
+    public boolean isValidTrip() {
+        return validTrip;
+    }
+
     public ArrayList<TripEntity> getTripList() {
 
         TripManager tm = TripManager.start();
@@ -80,15 +86,21 @@ public class HomeBean extends BeanBase {
     //methods
     public void calculateDistance() {
 
-        DistanceProvider dp = new DistanceProvider();
+        if(isBlankOrNull(origin) || isBlankOrNull(destination)) return;
 
-        int distanceInMeters = (int) dp.getDistance(origin, destination);
+        try {
+            DistanceProvider dp = new DistanceProvider();
 
-        distance = precisionRound(
-                distanceInMeters / (float)1000.0,
-                1);
+            int distanceInMeters = (int) dp.getDistance(origin, destination);
 
-        System.out.println(distance);
+            distance = precisionRound(
+                    distanceInMeters / (float) 1000.0,
+                    1);
+
+            validTrip = true;
+        }catch (Exception ignored){
+            provideMessage("Info", "Fehler bei der Berechnung");
+        }
     }
 
     public void saveIntoDB() {
@@ -109,11 +121,21 @@ public class HomeBean extends BeanBase {
         TripManager tm = TripManager.start();
         tm.addTrip(trip);
         tm.stop();
+
+        resetValues();
     }
 
     public String doLogout(){
         deleteUserCookie();
         return goToLoginPage();
+    }
+
+    private void resetValues(){
+        origin =null;
+        destination=null;
+        distance=0;
+        date=null;
+        validTrip = false;
     }
 
 }

@@ -47,9 +47,9 @@ public final class Tools {
 
     public static boolean isValidDate(Date dt){
 
-        LocalDate date = dt.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        if(dt == null) return false;
 
-        if(date == null) return false;
+        LocalDate date = dt.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
 
         if(date.isBefore(LocalDate.parse("1900-01-01"))) return false;
 

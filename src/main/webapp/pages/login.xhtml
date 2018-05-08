@@ -7,38 +7,40 @@
 
 <h:head>
     <title>Login</title>
+
+    <h:outputScript library="js" name="redirection.js" target="head"/>
+    <h:outputScript>
+        redirectIfLoggedIn("#{loginBean.activeUser}", "#{loginBean.webpageURL}"+"#{loginBean.homePage}")
+    </h:outputScript>
 </h:head>
 
-
 <h:body>
-    <h:outputScript>
-        if("#{homeBean.activeUser}"!== "")
-        {
-        location.href = "http://localhost:8080/logbook/pages/home.xhtml";
-        }
-    </h:outputScript>
-    <h:form>
+    <h:form id="loginForm">
 
-        <p:growl id="growl" sticky="true" showDetail="true" life="3000" />
+        <p:growl id="growl" sticky="true" showDetail="true" life="3000"/>
 
-            <h:panelGrid columns="2" cellpadding="5">
-                <h:outputLabel for="username" value="Username:" />
-                <p:inputText id="username" value="#{loginBean.username}" required="true" label="username" maxlength="45"/>
+        <p:panelGrid id="panelGrid" columns="2" cellpadding="5">
+            <h:outputLabel for="usernameInput" value="Username:"/>
+            <p:inputText id="usernameInput" value="#{loginBean.username}" required="true" maxlength="45"/>
 
-                <h:outputLabel for="password" value="Passwort:" />
-                <p:password id="password" value="#{loginBean.password}" required="true" label="password" maxlength="45"/>
 
-                <f:facet name="footer">
-                    <p:commandButton value="Einloggen" update="growl" action="#{loginBean.tryLogin}"/>
-                </f:facet>
-            </h:panelGrid>
+            <!--EVTL LABEL ATTRIBUT WIEDER HINZUFÜGEN!!!-->
+
+            <h:outputLabel for="pwInput" value="Passwort:"/>
+            <p:password id="pwInput" value="#{loginBean.password}" required="true" maxlength="45"/>
+
+            <f:facet name="footer">
+                <p:commandButton id="submitButton" value="Einloggen" update="growl" action="#{loginBean.tryLogin}"/>
+            </f:facet>
+        </p:panelGrid>
 
     </h:form>
 
     <br/>
 
-    <h:form>
-        <p:commandButton value="Registrieren" type="submit" action="#{loginBean.goToRegisterPage}" ajax="false"/>
+    <h:form id="redirectForm">
+        <p:commandButton id="goToRegisterPage" value="Registrieren" type="submit" action="#{loginBean.goToRegisterPage}"
+                         ajax="false"/>
     </h:form>
 
 </h:body>
