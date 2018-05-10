@@ -20,13 +20,13 @@
 
         <p:panelGrid id="panelGrid" columns="2" cellpadding="5">
             <h:outputLabel for="usernameInput" value="Username:"/>
-            <p:inputText id="usernameInput" value="#{registerBean.username}" required="true" maxlength="45"/>
+            <p:inputText id="usernameInput" value="#{registerBean.username}" required="true" maxlength="30"/>
 
             <h:outputLabel for="pwInput" value="Passwort:"/>
-            <p:password id="pwInput" value="#{registerBean.pw1}" required="true" maxlength="45"/>
+            <p:password id="pwInput" value="#{registerBean.pw1}" required="true" maxlength="30"/>
 
             <h:outputLabel for="pwInput2" value="Passwort bestätigen:"/>
-            <p:password id="pwInput2" value="#{registerBean.pw2}" required="true" maxlength="45"/>
+            <p:password id="pwInput2" value="#{registerBean.pw2}" required="true" maxlength="30"/>
 
             <f:facet name="footer">
                 <p:commandButton id="submitButton"

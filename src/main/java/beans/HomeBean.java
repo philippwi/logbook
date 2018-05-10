@@ -84,9 +84,20 @@ public class HomeBean extends BaseBean {
 
 
     //methods
+    private void resetValues(){
+        origin =null;
+        destination=null;
+        distance=0;
+        date=null;
+        validTrip = false;
+    }
+
     public void calculateDistance() {
 
-        if(isBlankOrNull(origin) || isBlankOrNull(destination)) return;
+        if(isBlankOrNull(origin) || isBlankOrNull(destination)){
+            provideMessage("Info", "Bitte Start- und Zielort eingeben!");
+            return;
+        }
 
         try {
             DistanceProvider dp = new DistanceProvider();
@@ -99,7 +110,7 @@ public class HomeBean extends BaseBean {
 
             validTrip = true;
         }catch (Exception ignored){
-            provideMessage("Info", "Fehler bei der Berechnung");
+            provideMessage("Info", "Fehler bei der Berechnung. Bitte eingegebene Orte auf Korrektheit prüfen!");
         }
     }
 
@@ -107,6 +118,11 @@ public class HomeBean extends BaseBean {
 
         if(distance == 0 || isBlankOrNull(origin) || isBlankOrNull(destination)){
             provideMessage("Info", "Bitte erst alle Felder ausfüllen und Distanz berechnen lassen");
+            return;
+        }
+
+        if(origin.length() > 45 || destination.length() > 45){
+            provideMessage("Info", "Ortseingaben dürfen maximal 45 Zeichen lang sein!");
             return;
         }
         if(!isValidDate(date)){
@@ -128,13 +144,4 @@ public class HomeBean extends BaseBean {
         deleteUserCookie();
         return loginPage;
     }
-
-    private void resetValues(){
-        origin =null;
-        destination=null;
-        distance=0;
-        date=null;
-        validTrip = false;
-    }
-
 }

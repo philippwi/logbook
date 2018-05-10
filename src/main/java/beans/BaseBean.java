@@ -1,5 +1,8 @@
 package beans;
 
+import db.models.UserEntity;
+import db.operation.UserManager;
+
 import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
@@ -22,6 +25,9 @@ public class BaseBean implements Serializable {
     final String homePage = HOME_PAGE;
 
     private String activeUser;
+
+
+    private boolean admin;
 
     public String getGoogleApiKey() {
         return googleApiKey;
@@ -56,8 +62,22 @@ public class BaseBean implements Serializable {
         this.activeUser = activeUser;
     }
 
+    public boolean isAdmin() {
+
+        UserManager um = UserManager.start();
+
+        UserEntity user = um.getUser(getActiveUser());
+
+        um.stop();
+
+        admin = (user.getAdmin() == 1);
+
+        return admin;
+    }
+
     void provideMessage(String title, String msg) {
         FacesContext context = FacesContext.getCurrentInstance();
         context.addMessage(null, new FacesMessage(title, msg));
     }
+
 }

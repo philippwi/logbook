@@ -11,3 +11,10 @@ function redirectIfLoggedIn(username, url) {
         location.href = url;
     }
 }
+
+function redirectIfNotAdmin(status, url) {
+    if(status !== 1)
+    {
+        location.href = url;
+    }
+}

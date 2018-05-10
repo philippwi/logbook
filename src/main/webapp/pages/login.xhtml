@@ -21,13 +21,13 @@
 
         <p:panelGrid id="panelGrid" columns="2" cellpadding="5">
             <h:outputLabel for="usernameInput" value="Username:"/>
-            <p:inputText id="usernameInput" value="#{loginBean.username}" required="true" maxlength="45"/>
+            <p:inputText id="usernameInput" value="#{loginBean.username}" required="true" maxlength="30"/>
 
 
             <!--EVTL LABEL ATTRIBUT WIEDER HINZUFÜGEN!!!-->
 
             <h:outputLabel for="pwInput" value="Passwort:"/>
-            <p:password id="pwInput" value="#{loginBean.password}" required="true" maxlength="45"/>
+            <p:password id="pwInput" value="#{loginBean.password}" required="true" maxlength="30"/>
 
             <f:facet name="footer">
                 <p:commandButton id="submitButton" value="Einloggen" update="growl" action="#{loginBean.tryLogin}"/>

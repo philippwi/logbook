@@ -34,6 +34,19 @@ public class TripManager {
         emFactory.close();
     }
 
+    public List<TripEntity> getAllTrips(){
+
+        createEM();
+
+        List<TripEntity> tripList = em.createQuery(
+                "select new TripEntity(tripId, user, origin, destination, distance, date) " +
+                        "from TripEntity", TripEntity.class)
+                .getResultList();
+
+        closeEM();
+
+        return tripList;
+    }
     public List<TripEntity> getUserTrips(String username){
 
         createEM();
