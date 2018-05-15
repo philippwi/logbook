@@ -4,8 +4,11 @@ public final class Configuration {
 
     private Configuration(){}
 
+    //admin registration
+    public static final String ADMIN_KEY = "admin";
+
     //navigation
-    public static final String HOST =  "localhost";
+    public static final String HOST = "localhost";
     public static final int PORT =  8080;
     public static final String WEBPAGE_URL = "http://" + HOST + ":" + PORT + "/logbook/" + "pages/";
     public static final String LOGIN_PAGE = "login.xhtml";

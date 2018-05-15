@@ -28,6 +28,9 @@
             <h:outputLabel for="pwInput2" value="Passwort bestätigen:"/>
             <p:password id="pwInput2" value="#{registerBean.pw2}" required="true" maxlength="30"/>
 
+            <h:outputLabel for="adminkeyInput" value="Administrator-Schlüssel:"/>
+            <p:password id="adminkeyInput" value="#{registerBean.adminKey}" required="false" maxlength="30"/>
+
             <f:facet name="footer">
                 <p:commandButton id="submitButton"
                                  value="Registrierung bestätigen"

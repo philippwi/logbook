@@ -19,65 +19,70 @@
 
     <p:growl id="growl" sticky="true" showDetail="true" life="3000"/>
 
+    <h:form>
+        <p:dataTable id="userTable"
+                     var="user"
+                     value="#{adminBean.userList}"
+                     selection="#{adminBean.selectedUsers}"
+                     rowKey="#{user.name}"
+                     style="margin-bottom:0">
+            <f:facet name="header">
+                Nutzer
+            </f:facet>
+            <p:column selectionMode="multiple" style="width:16px;text-align:center"/>
+            <p:column headerText="Name">
+                <h:outputText value="#{user.name}"/>
+            </p:column>
+            <p:column headerText="Admin-Status">
+                <h:outputText value="#{user.admin}"/>
+            </p:column>
+            <f:facet name="footer">
+                <p:commandButton process="userTable"
+                                 update="userTable"
+                                 value="Löschen"
+                                 action="#{adminBean.deleteSelectedUsers}"/>
+            </f:facet>
+        </p:dataTable>
+    </h:form>
 
-    <p:dataTable id="userTable"
-                 var="user"
-                 value="#{adminBean.userList}"
-                 selection="#{adminBean.selectedUsers}"
-                 rowKey="#{user.name}"
-                 style="margin-bottom:0">
-        <f:facet name="header">
-            Nutzer
-        </f:facet>
-        <p:column selectionMode="multiple" style="width:16px;text-align:center"/>
-        <p:column headerText="Name">
-            <h:outputText value="#{user.name}" />
-        </p:column>
-        <p:column headerText="Admin-Status">
-            <h:outputText value="#{user.admin}" />
-        </p:column>
-        <f:facet name="footer">
-            <p:commandButton process="userTable"
-                             update="userTable"
-                             value="Löschen"
-                             action="#{adminBean.deleteSelectedUsers}"/>
-        </f:facet>
-    </p:dataTable>
+    <br/><br/>
 
-    <p:dataTable id="tripTable"
-                 var="trip"
-                 value="#{adminBean.tripList}"
-                 selection="#{adminBean.selectedTrips}"
-                 rowKey="#{trip.tripId}"
-                 style="margin-bottom:0">
-        <f:facet name="header">
-            Fahrten
-        </f:facet>
-        <p:column selectionMode="multiple" style="width:16px;text-align:center"/>
-        <p:column headerText="ID">
-            <h:outputText value="#{trip.tripId}"/>
-        </p:column>
-        <p:column headerText="Nutzer">
-        <h:outputText value="#{trip.user}"/>
-    </p:column>
-        <p:column headerText="Von">
-            <h:outputText value="#{trip.origin}"/>
-        </p:column>
-        <p:column headerText="Nach">
-            <h:outputText value="#{trip.destination}"/>
-        </p:column>
-        <p:column headerText="Distanz">
-            <h:outputText value="#{trip.distance}"/>
-        </p:column>
-        <p:column headerText="Datum">
-            <h:outputText value="#{trip.date}"/>
-        </p:column>
-        <f:facet name="footer">
-            <p:commandButton process="tripTable"
-                             update="tripTable"
-                             value="Löschen"
-                             action="#{adminBean.deleteSelectedTrips}"/>
-        </f:facet>
-    </p:dataTable>
+    <h:form>
+        <p:dataTable id="tripTable"
+                     var="trip"
+                     value="#{adminBean.tripList}"
+                     selection="#{adminBean.selectedTrips}"
+                     rowKey="#{trip.tripId}"
+                     style="margin-bottom:0">
+            <f:facet name="header">
+                Fahrten
+            </f:facet>
+            <p:column selectionMode="multiple" style="width:16px;text-align:center"/>
+            <p:column headerText="ID">
+                <h:outputText value="#{trip.tripId}"/>
+            </p:column>
+            <p:column headerText="Nutzer">
+                <h:outputText value="#{trip.user}"/>
+            </p:column>
+            <p:column headerText="Von">
+                <h:outputText value="#{trip.origin}"/>
+            </p:column>
+            <p:column headerText="Nach">
+                <h:outputText value="#{trip.destination}"/>
+            </p:column>
+            <p:column headerText="Distanz">
+                <h:outputText value="#{trip.distance}"/>
+            </p:column>
+            <p:column headerText="Datum">
+                <h:outputText value="#{trip.date}"/>
+            </p:column>
+            <f:facet name="footer">
+                <p:commandButton process="tripTable"
+                                 update="tripTable"
+                                 value="Löschen"
+                                 action="#{adminBean.deleteSelectedTrips}"/>
+            </f:facet>
+        </p:dataTable>
+    </h:form>
 </h:body>
 </html>

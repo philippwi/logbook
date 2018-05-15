@@ -1,19 +1,23 @@
-***Projekt Struktur***
+***Project structure***
 
 src/main/java
-.beans: Bean-Klassen für JSF/Frontend
+.beans: bean-classes to provide functionality for the frontend
+.calculation: classes for backend operations
+.config: setting static global project variables
 .db
-..models: Entity-Klassen für Datenbanktabellen
-..operation: Klassen für Änderungen/Abfragen der Datenbank
-.utility: Klassen für sonstige projektrelevante Backend-Methoden
+..models: persistence entities representing database models
+..operation: classes providing functionality for reading from and writing to the database
+.utility: utility classes providing static methods
 
-src/main/resources: Konfigurationsdateien
+src/main/resources: configuration of the database connection
 
 src/main/webapp
-.pages: alle .xhtml-Seiten
-.WEB-INF: Konfiguration
+.pages: all .xhtml pages shown to the user
+.resources/js: javascript files
+.WEB-INF: configuration files
+index.xhtml: dummy page managing redirect to correct URL
 
-src/test: to do...
+
 
 
 ----------------------------------------------------------------------------
@@ -43,5 +47,24 @@ CREATE TABLE `logbook`.`trip` (
   PRIMARY KEY (`TripID`));
 
 
+----------------------------------------------------------------------------
 
 
+***Quick start***
+
+Login page:
+- sign in with valid credentials --> redirect to home page
+
+Register page:
+- register a new user (leave admin key field empty)
+- enter amdin key to register user with administration rights
+
+Home page:
+- enter origin and destination
+- execute distance calculation
+- select valid date
+- save trip to trip table
+
+Admin page:
+- view all registered user and stored trips
+- select and delete users and trips
