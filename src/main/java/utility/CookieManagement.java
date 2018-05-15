@@ -21,8 +21,6 @@ public final class CookieManagement {
     }
 
     public static void deleteUserCookie(){
-        //TODO: testing
-
         Map<String, Object> properties = new HashMap<>();
         properties.put("maxAge", 0);
 

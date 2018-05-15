@@ -139,9 +139,4 @@ public class HomeBean extends BaseBean {
 
         resetValues();
     }
-
-    public String doLogout(){
-        deleteUserCookie();
-        return loginPage;
-    }
 }

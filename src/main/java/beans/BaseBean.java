@@ -11,7 +11,9 @@ import javax.inject.Named;
 import java.io.Serializable;
 
 import static config.Configuration.*;
+import static utility.CookieManagement.deleteUserCookie;
 import static utility.CookieManagement.getCurrentUser;
+import static utility.Tools.isBlankOrNull;
 
 @Named
 @RequestScoped
@@ -23,6 +25,7 @@ public class BaseBean implements Serializable {
     final String loginPage = LOGIN_PAGE;
     final String registerPage = REGISTER_PAGE;
     final String homePage = HOME_PAGE;
+    final String adminPage = ADMIN_PAGE;
 
     private String activeUser;
 
@@ -47,6 +50,9 @@ public class BaseBean implements Serializable {
     public String getHomePage() {
         return homePage;
     }
+    public String getAdminPage() {
+        return adminPage;
+    }
 
     public String getActiveUser() {
         activeUser = getCurrentUser();
@@ -64,9 +70,16 @@ public class BaseBean implements Serializable {
 
     public boolean isAdmin() {
 
+        String username = getActiveUser();
+
+        if(isBlankOrNull(username)){
+            admin = false;
+            return admin;
+        }
+
         UserManager um = UserManager.start();
 
-        UserEntity user = um.getUser(getActiveUser());
+        UserEntity user = um.getUser(username);
 
         um.stop();
 
@@ -78,6 +91,14 @@ public class BaseBean implements Serializable {
     void provideMessage(String title, String msg) {
         FacesContext context = FacesContext.getCurrentInstance();
         context.addMessage(null, new FacesMessage(title, msg));
+    }
+
+
+    public String doLogout(){
+
+        if(!isBlankOrNull(getActiveUser())) deleteUserCookie();
+
+        return loginPage;
     }
 
 }

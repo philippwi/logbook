@@ -9,7 +9,7 @@
     <title>User- und Tripmanagement</title>
     <h:outputScript library="js" name="redirection.js" target="head"/>
     <h:outputScript>
-        <!--redirectIfNotAdmin("#{adminBean.activeUser}","#{adminBean.webpageURL}"+"#{adminBean.homePage}")-->
+        redirectIfNotAdmin("#{adminBean.admin}","#{adminBean.webpageURL}"+"#{adminBean.homePage}")
     </h:outputScript>
     <script type="text/javascript"
             src="https://maps.googleapis.com/maps/api/js?v=3.exp&amp;libraries=places&amp;key=#{homeBean.googleApiKey}"/>
@@ -19,6 +19,19 @@
 
     <p:growl id="growl" sticky="true" showDetail="true" life="3000"/>
 
+    <h:form>
+        <p:commandButton id="goToLoginPage"
+                         value="Ausloggen"
+                         type="submit"
+                         action="#{adminBean.doLogout}"
+                         ajax="false"/>
+    </h:form>
+
+    <br/>
+
+    <p:button value="Homepage" outcome="#{adminBean.homePage}"/>
+
+    <br/>
     <h:form>
         <p:dataTable id="userTable"
                      var="user"

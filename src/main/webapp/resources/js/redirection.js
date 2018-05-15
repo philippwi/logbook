@@ -12,9 +12,10 @@ function redirectIfLoggedIn(username, url) {
     }
 }
 
-function redirectIfNotAdmin(status, url) {
-    if(status !== 1)
+function redirectIfNotAdmin(isAdmin, url) {
+    if(isAdmin !== "true")
     {
+        alert("Keine Admin-Rechte!");
         location.href = url;
     }
 }

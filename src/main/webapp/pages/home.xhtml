@@ -20,13 +20,19 @@
 
     <p:growl id="growl" sticky="true" showDetail="true" life="3000"/>
 
-    <h:form id="redirectForm">
-        <p:commandButton id="goToLoginPage"
-                         value="Ausloggen"
-                         type="submit"
-                         action="#{homeBean.doLogout}"
-                         ajax="false"/>
+    <h:form>
+    <p:commandButton id="goToLoginPage"
+                     value="Ausloggen"
+                     type="submit"
+                     action="#{homeBean.doLogout}"
+                     ajax="false"/>
     </h:form>
+
+    <br/>
+
+    <p:button value="User- und Tripmanagement" outcome="#{homeBean.adminPage}" rendered="#{homeBean.admin}"/>
+
+    <br/>
 
     <h:form id="calculationForm">
         <p:panelGrid id="calculationPanel" columns="2" cellpadding="5">

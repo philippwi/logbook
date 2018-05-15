@@ -14,6 +14,7 @@ public final class Configuration {
     public static final String LOGIN_PAGE = "login.xhtml";
     public static final String REGISTER_PAGE = "register.xhtml";
     public static final String HOME_PAGE = "home.xhtml";
+    public static final String ADMIN_PAGE = "admin.xhtml";
 
     //jpa
     public static final String PERSISTENCE_UNIT_NAME =  "logbookPU";
