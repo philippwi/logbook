@@ -1,0 +1,33 @@
+.fullCell{
+    width: 100%;
+}
+
+.centeredText{
+    text-align: center;
+}
+
+.centeredElement{
+    margin: 0 auto;
+}
+
+.navButtonLeft{
+    display: inline-block;
+    float: left;
+}
+
+.navButtonRight{
+     display: inline-block;
+     float: right;
+ }
+
+.homeInputPanel{
+    width: 40%;
+}
+
+.userTable{
+    width: 50%;
+}
+
+.selectColumn{
+    width:16px;text-align:center;
+}

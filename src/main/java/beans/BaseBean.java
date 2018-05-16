@@ -29,9 +29,6 @@ public class BaseBean implements Serializable {
 
     private String activeUser;
 
-
-    private boolean admin;
-
     public String getGoogleApiKey() {
         return googleApiKey;
     }
@@ -68,25 +65,6 @@ public class BaseBean implements Serializable {
         this.activeUser = activeUser;
     }
 
-    public boolean isAdmin() {
-
-        String username = getActiveUser();
-
-        if(isBlankOrNull(username)){
-            admin = false;
-            return admin;
-        }
-
-        UserManager um = UserManager.start();
-
-        UserEntity user = um.getUser(username);
-
-        um.stop();
-
-        admin = (user.getAdmin() == 1);
-
-        return admin;
-    }
 
     void provideMessage(String title, String msg) {
         FacesContext context = FacesContext.getCurrentInstance();

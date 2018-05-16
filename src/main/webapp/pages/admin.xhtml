@@ -13,6 +13,7 @@
     </h:outputScript>
     <script type="text/javascript"
             src="https://maps.googleapis.com/maps/api/js?v=3.exp&amp;libraries=places&amp;key=#{homeBean.googleApiKey}"/>
+    <h:outputStylesheet library="css" name="stylesheet.css"/>
 </h:head>
 
 <h:body>
@@ -20,34 +21,43 @@
     <p:growl id="growl" sticky="true" showDetail="true" life="3000"/>
 
     <h:form>
-        <p:commandButton id="goToLoginPage"
+        <p:commandButton styleClass="navButtonLeft"
+                         id="goToLoginPage"
                          value="Ausloggen"
                          type="submit"
                          action="#{adminBean.doLogout}"
                          ajax="false"/>
+
+        <p:button styleClass="navButtonRight" value="Homepage" outcome="#{adminBean.homePage}"/>
     </h:form>
 
     <br/>
 
-    <p:button value="Homepage" outcome="#{adminBean.homePage}"/>
 
     <br/>
     <h:form>
-        <p:dataTable id="userTable"
+        <p:dataTable styleClass="userTable centeredElement centeredText"
+                     id="userTable"
                      var="user"
                      value="#{adminBean.userList}"
                      selection="#{adminBean.selectedUsers}"
-                     rowKey="#{user.name}"
-                     style="margin-bottom:0">
+                     rowKey="#{user.name}">
             <f:facet name="header">
                 Nutzer
             </f:facet>
-            <p:column selectionMode="multiple" style="width:16px;text-align:center"/>
-            <p:column headerText="Name">
+            <p:column styleClass="selectColumn" selectionMode="multiple"/>
+            <p:column headerText="Name" filterBy="#{user.name}" filterMatchMode="contains">
                 <h:outputText value="#{user.name}"/>
             </p:column>
-            <p:column headerText="Admin-Status">
-                <h:outputText value="#{user.admin}"/>
+            <p:column headerText="Admin-Status" filterBy="#{user.admin == 1}" filterMatchMode="equals">
+                <f:facet name="filter">
+                    <p:selectOneButton onchange="PF('userTable').filter()">
+                        <f:converter converterId="javax.faces.Boolean" />
+                        <f:selectItem itemLabel="Ja" itemValue="1" />
+                        <f:selectItem itemLabel="Nein" itemValue="0" />
+                    </p:selectOneButton>
+                </f:facet>
+                <h:outputText value="#{(user.admin == 1) ? 'Ja':'Nein'}" />
             </p:column>
             <f:facet name="footer">
                 <p:commandButton process="userTable"
@@ -61,16 +71,16 @@
     <br/><br/>
 
     <h:form>
-        <p:dataTable id="tripTable"
+        <p:dataTable styleClass="centeredElement centeredText"
+                     id="tripTable"
                      var="trip"
                      value="#{adminBean.tripList}"
                      selection="#{adminBean.selectedTrips}"
-                     rowKey="#{trip.tripId}"
-                     style="margin-bottom:0">
+                     rowKey="#{trip.tripId}">
             <f:facet name="header">
                 Fahrten
             </f:facet>
-            <p:column selectionMode="multiple" style="width:16px;text-align:center"/>
+            <p:column styleClass="selectColumn" selectionMode="multiple"/>
             <p:column headerText="ID">
                 <h:outputText value="#{trip.tripId}"/>
             </p:column>

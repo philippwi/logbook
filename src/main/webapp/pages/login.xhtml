@@ -12,33 +12,34 @@
     <h:outputScript>
         redirectIfLoggedIn("#{loginBean.activeUser}", "#{loginBean.webpageURL}"+"#{loginBean.homePage}")
     </h:outputScript>
+    <h:outputStylesheet library="css" name="stylesheet.css"/>
 </h:head>
 
 <h:body>
     <h:form id="loginForm">
-
         <p:growl id="growl" sticky="true" showDetail="true" life="3000"/>
-
-        <p:panelGrid id="panelGrid" columns="2" cellpadding="5">
+        <p:panelGrid styleClass="centeredElement centeredText" id="panelGrid" columns="2" cellpadding="5">
             <h:outputLabel for="usernameInput" value="Username:"/>
-            <p:inputText id="usernameInput" value="#{loginBean.username}" required="true" maxlength="30"/>
-
+            <p:inputText styleClass="fullCell" id="usernameInput" value="#{loginBean.username}" required="true" maxlength="30"/>
 
             <!--EVTL LABEL ATTRIBUT WIEDER HINZUFÜGEN!!!-->
 
             <h:outputLabel for="pwInput" value="Passwort:"/>
-            <p:password id="pwInput" value="#{loginBean.password}" required="true" maxlength="30"/>
+            <p:password styleClass="fullCell" id="pwInput" value="#{loginBean.password}" required="true" maxlength="30"/>
 
             <f:facet name="footer">
-                <p:commandButton id="submitButton" value="Einloggen" update="growl" action="#{loginBean.tryLogin}"/>
+                <p:commandButton styleClass="fullCell"
+                                 id="submitButton"
+                                 value="Einloggen"
+                                 update="growl"
+                                 action="#{loginBean.tryLogin}"/>
             </f:facet>
         </p:panelGrid>
-
     </h:form>
-
     <br/>
 
-    <p:button value="Registrieren" outcome="#{loginBean.registerPage}"/>
-
+<div class="centeredText">
+        <p:button value="Zur Registrierung" outcome="#{loginBean.registerPage}"/>
+</div>
 </h:body>
 </html>

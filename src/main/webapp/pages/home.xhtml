@@ -14,6 +14,8 @@
     </h:outputScript>
     <script type="text/javascript"
             src="https://maps.googleapis.com/maps/api/js?v=3.exp&amp;libraries=places&amp;key=#{homeBean.googleApiKey}"/>
+
+    <h:outputStylesheet library="css" name="stylesheet.css"/>
 </h:head>
 
 <h:body>
@@ -21,32 +23,38 @@
     <p:growl id="growl" sticky="true" showDetail="true" life="3000"/>
 
     <h:form>
-    <p:commandButton id="goToLoginPage"
-                     value="Ausloggen"
-                     type="submit"
-                     action="#{homeBean.doLogout}"
-                     ajax="false"/>
+        <p:commandButton styleClass="navButtonLeft"
+                         id="goToLoginPage"
+                         value="Ausloggen"
+                         type="submit"
+                         action="#{homeBean.doLogout}"
+                         ajax="false"/>
+
+        <p:button styleClass="navButtonRight" value="User- und Tripmanagement" outcome="#{homeBean.adminPage}" rendered="#{homeBean.admin}"/>
     </h:form>
 
     <br/>
 
-    <p:button value="User- und Tripmanagement" outcome="#{homeBean.adminPage}" rendered="#{homeBean.admin}"/>
 
     <br/>
 
     <h:form id="calculationForm">
-        <p:panelGrid id="calculationPanel" columns="2" cellpadding="5">
+        <p:panelGrid styleClass="homeInputPanel centeredElement centeredText"
+                     id="calculationPanel"
+                     columns="2"
+                     cellpadding="5">
             <h:outputLabel for="originInput" value="Start:"/>
-            <p:inputText id="originInput" value="#{homeBean.origin}" maxlength="45"/>
+            <p:inputText styleClass="fullCell" id="originInput" value="#{homeBean.origin}" maxlength="45"/>
 
             <h:outputLabel for="destinationInput" value="Ziel:"/>
-            <p:inputText id="destinationInput" value="#{homeBean.destination}" maxlength="45"/>
+            <p:inputText styleClass="fullCell" id="destinationInput" value="#{homeBean.destination}" maxlength="45"/>
 
             <h:outputLabel for="distanceLabel" value="Distanz:"/>
             <h:outputLabel id="distanceLabel" value="#{homeBean.distance} km"/>
 
             <f:facet name="footer">
-                <p:commandButton id="executeButton"
+                <p:commandButton styleClass="fullCell"
+                                 id="executeButton"
                                  value="Entfernung berechnen"
                                  update="growl distanceLabel savingForm"
                                  action="#{homeBean.calculateDistance}"/>
@@ -54,14 +62,23 @@
         </p:panelGrid>
     </h:form>
 
-    <h:form id="savingForm">
-        <p:panelGrid id="savingPanel" columns="2" cellpadding="5">
-            <p:outputLabel for="dateInput" value="Datum:"/>
-            <p:calendar id="dateInput" value="#{homeBean.date}" locale="de" navigator="true" pattern="dd-MM-yyyy"
-                        mask="true"/>
+    <br/>
 
+    <h:form id="savingForm">
+        <p:panelGrid styleClass="homeInputPanel centeredElement centeredText"
+                     id="savingPanel"
+                     columns="2"
+                     cellpadding="5">
+            <p:outputLabel for="dateInput" value="Datum:"/>
+            <p:calendar id="dateInput"
+                        value="#{homeBean.date}"
+                        locale="de"
+                        navigator="true"
+                        pattern="dd-MM-yyyy"
+                        mask="true"/>
             <f:facet name="footer">
-                <p:commandButton id="saveButton"
+                <p:commandButton styleClass="fullCell"
+                                 id="saveButton"
                                  value="Fahrt speichern"
                                  update="growl calculationForm tripsForm savingForm "
                                  disabled="#{!homeBean.validTrip}"
@@ -70,12 +87,17 @@
         </p:panelGrid>
     </h:form>
 
+    <br/><br/>
+
     <h:form id="tripsForm">
-        <p:dataTable id="tripTable"
+        <p:dataTable styleClass="centeredText"
+                     id="tripTable"
                      var="trip"
                      value="#{homeBean.tripList}"
                      emptyMessage="Keine eingetragenen Fahrten">
-
+            <f:facet name="header">
+                Fahrten
+            </f:facet>
             <p:column headerText="Von">
                 <h:outputText value="#{trip.origin}"/>
             </p:column>

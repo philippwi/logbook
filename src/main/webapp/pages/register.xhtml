@@ -12,32 +12,38 @@
     <h:outputScript>
         redirectIfLoggedIn("#{registerBean.activeUser}", "#{registerBean.webpageURL}"+"#{registerBean.homePage}")
     </h:outputScript>
+    <h:outputStylesheet library="css" name="stylesheet.css"/>
 </h:head>
 
 <h:body>
     <h:form id="registerForm">
         <p:growl id="growl" sticky="true" showDetail="true" life="3000"/>
 
-        <p:panelGrid id="panelGrid" columns="2" cellpadding="5">
+        <p:panelGrid styleClass="centeredElement centeredText" id="panelGrid" columns="2" cellpadding="5">
             <h:outputLabel for="usernameInput" value="Username:"/>
-            <p:inputText id="usernameInput" value="#{registerBean.username}" required="true" maxlength="30"/>
+            <p:inputText styleClass="fullCell" id="usernameInput" value="#{registerBean.username}" required="true" maxlength="30"/>
 
             <h:outputLabel for="pwInput" value="Passwort:"/>
-            <p:password id="pwInput" value="#{registerBean.pw1}" required="true" maxlength="30"/>
+            <p:password styleClass="fullCell" id="pwInput" value="#{registerBean.pw1}" required="true" maxlength="30"/>
 
             <h:outputLabel for="pwInput2" value="Passwort bestätigen:"/>
-            <p:password id="pwInput2" value="#{registerBean.pw2}" required="true" maxlength="30"/>
+            <p:password styleClass="fullCell" id="pwInput2" value="#{registerBean.pw2}" required="true" maxlength="30"/>
 
             <h:outputLabel for="adminkeyInput" value="Administrator-Schlüssel:"/>
-            <p:password id="adminkeyInput" value="#{registerBean.adminKey}" required="false" maxlength="30"/>
+            <p:password styleClass="fullCell" id="adminkeyInput" value="#{registerBean.adminKey}" required="false" maxlength="30"/>
 
             <f:facet name="footer">
-                <p:commandButton id="submitButton"
+                <p:commandButton styleClass="fullCell"
+                                 id="submitButton"
                                  value="Registrierung bestätigen"
                                  update="growl"
                                  action="#{registerBean.tryRegister}"/>
             </f:facet>
         </p:panelGrid>
     </h:form>
+<br/>
+    <div class="centeredText">
+        <p:button value="Zum Login" outcome="#{loginBean.loginPage}"/>
+    </div>
 </h:body>
 </html>
