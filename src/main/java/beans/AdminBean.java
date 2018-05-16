@@ -20,34 +20,12 @@ import static utility.Tools.*;
 @SessionScoped
 public class AdminBean extends BaseBean {
 
-    private boolean admin;
-
     private ArrayList<UserEntity> userList;
     private ArrayList<TripEntity> tripList;
 
     private ArrayList<UserEntity> selectedUsers;
 
     private ArrayList<TripEntity> selectedTrips;
-
-    public boolean isAdmin() {
-
-        String username = getActiveUser();
-
-        if(isBlankOrNull(username)){
-            admin = false;
-            return admin;
-        }
-
-        UserManager um = UserManager.start();
-
-        UserEntity user = um.getUser(username);
-
-        um.stop();
-
-        admin = (user.getAdmin() == 1);
-
-        return admin;
-    }
 
     public ArrayList<UserEntity> getUserList() {
 

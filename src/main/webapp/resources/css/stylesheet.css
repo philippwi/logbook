@@ -1,3 +1,7 @@
+body{
+    background-image: url("../../images/aurora1.jpg");
+}
+
 .fullCell{
     width: 100%;
 }
