@@ -1,5 +1,6 @@
 body{
-    background-image: url("../../images/aurora1.jpg");
+    background: url("../images/road1.jpg") no-repeat;
+    background-size: 100%;
 }
 
 .fullCell{
@@ -24,6 +25,10 @@ body{
      float: right;
  }
 
+.userLabel{
+
+}
+
 .homeInputPanel{
     width: 40%;
 }
@@ -34,4 +39,14 @@ body{
 
 .selectColumn{
     width:16px;text-align:center;
+}
+
+.tableButtonLeft{
+    float: left;
+    width: 30%;
+}
+
+.tableButtonRight{
+    float: right;
+    width: 30%;
 }

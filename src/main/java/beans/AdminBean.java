@@ -1,6 +1,5 @@
 package beans;
 
-import calculation.DistanceProvider;
 import db.models.TripEntity;
 import db.models.UserEntity;
 import db.operation.TripManager;
@@ -8,13 +7,7 @@ import db.operation.UserManager;
 
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
-import java.time.LocalDate;
-import java.time.ZoneId;
 import java.util.ArrayList;
-import java.util.Date;
-
-import static utility.CookieManagement.deleteUserCookie;
-import static utility.Tools.*;
 
 @Named
 @SessionScoped
@@ -28,26 +21,12 @@ public class AdminBean extends BaseBean {
     private ArrayList<TripEntity> selectedTrips;
 
     public ArrayList<UserEntity> getUserList() {
-
-        UserManager um = UserManager.start();
-
-        userList = new ArrayList<>(
-                um.getAllUsers());
-
-        um.stop();
-
+        if(userList == null || userList.isEmpty()) updateUserList();
         return userList;
     }
 
     public ArrayList<TripEntity> getTripList() {
-
-        TripManager tm = TripManager.start();
-
-        tripList = new ArrayList<>(
-                tm.getAllTrips());
-
-        tm.stop();
-
+        if(tripList == null || tripList.isEmpty()) updateTripList();
         return tripList;
     }
 
@@ -67,8 +46,30 @@ public class AdminBean extends BaseBean {
         this.selectedTrips = selectedTrips;
     }
 
+    public void updateUserList() {
+        UserManager um = UserManager.start();
+
+        userList = new ArrayList<>(
+                um.getAllUsers());
+
+        um.stop();
+    }
+
+    public void updateTripList() {
+        TripManager tm = TripManager.start();
+
+        tripList = new ArrayList<>(
+                tm.getAllTrips());
+
+        tm.stop();
+    }
 
     public void deleteSelectedUsers(){
+
+        if (selectedUsers == null || selectedUsers.isEmpty()) {
+            provideMessage("Info", "Bitte zu löschende Nutzer auswählen");
+            return;
+        }
 
         UserManager um = UserManager.start();
 
@@ -77,9 +78,18 @@ public class AdminBean extends BaseBean {
         }
 
         um.stop();
+
+        updateUserList();
+
+        selectedUsers = null;
     }
 
     public void deleteSelectedTrips(){
+
+        if (selectedTrips == null || selectedTrips.isEmpty()) {
+            provideMessage("Info", "Bitte zu löschende Fahrten auswählen");
+            return;
+        }
 
         TripManager tm = TripManager.start();
 
@@ -88,6 +98,10 @@ public class AdminBean extends BaseBean {
         }
 
         tm.stop();
+
+        updateTripList();
+
+        selectedTrips = null;
     }
 
 }

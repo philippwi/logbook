@@ -22,9 +22,11 @@
 
     <p:growl id="growl" sticky="true" showDetail="true" life="3000"/>
 
+    <p:outputLabel styleClass="userLabel" value="Aktueller Nutzer: #{adminBean.activeUser}"/>
+
     <h:form>
         <p:commandButton styleClass="navButtonLeft"
-                         id="goToLoginPage"
+                         id="logoutButton"
                          value="Ausloggen"
                          type="submit"
                          action="#{homeBean.doLogout}"
@@ -33,10 +35,7 @@
         <p:button styleClass="navButtonRight" value="User- und Tripmanagement" outcome="#{homeBean.adminPage}" rendered="#{homeBean.admin}"/>
     </h:form>
 
-    <br/>
-
-
-    <br/>
+    <br/><br/>
 
     <h:form id="calculationForm">
         <p:panelGrid styleClass="homeInputPanel centeredElement centeredText"
@@ -90,29 +89,40 @@
     <br/><br/>
 
     <h:form id="tripsForm">
-        <p:dataTable styleClass="centeredText"
+        <p:dataTable styleClass="centeredElement centeredText"
                      id="tripTable"
                      var="trip"
+                     widgetVar="tripsTableVar"
                      value="#{homeBean.tripList}"
-                     emptyMessage="Keine eingetragenen Fahrten">
+                     selection="#{homeBean.selectedTrips}"
+                     rowKey="#{trip.tripId}">
             <f:facet name="header">
                 Fahrten
             </f:facet>
-            <p:column headerText="Von">
+            <p:column styleClass="selectColumn" selectionMode="multiple"/>
+            <p:column filterBy="#{trip.origin}" headerText="Von" filterMatchMode="contains">
                 <h:outputText value="#{trip.origin}"/>
             </p:column>
-
-            <p:column headerText="Nach">
+            <p:column filterBy="#{trip.destination}" headerText="Nach" filterMatchMode="contains">
                 <h:outputText value="#{trip.destination}"/>
             </p:column>
-
-            <p:column headerText="Distanz">
+            <p:column sortBy="#{trip.distance}" headerText="Distanz">
                 <h:outputText value="#{trip.distance}"/>
             </p:column>
-
-            <p:column headerText="Datum">
+            <p:column sortBy="#{trip.date}" headerText="Datum" >
                 <h:outputText value="#{trip.date}"/>
             </p:column>
+            <f:facet name="footer">
+                <p:commandButton styleClass="tableButtonLeft"
+                                 process="tripTable"
+                                 update="growl tripTable"
+                                 value="Löschen"
+                                 action="#{homeBean.deleteSelectedTrips}"/>
+                <p:commandButton styleClass="tableButtonRight"
+                                 value="Update"
+                                 update="tripTable"
+                                 action="#{homeBean.updateTripList}"/>
+            </f:facet>
         </p:dataTable>
     </h:form>
 </h:body>

@@ -2,6 +2,7 @@ package beans;
 
 import calculation.DistanceProvider;
 import db.models.TripEntity;
+import db.models.UserEntity;
 import db.operation.TripManager;
 
 import javax.enterprise.context.SessionScoped;
@@ -11,7 +12,6 @@ import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Date;
 
-import static utility.CookieManagement.deleteUserCookie;
 import static utility.Tools.isBlankOrNull;
 import static utility.Tools.isValidDate;
 import static utility.Tools.precisionRound;
@@ -28,6 +28,9 @@ public class HomeBean extends BaseBean {
     private boolean validTrip;
 
     private ArrayList<TripEntity> tripList;
+
+    private ArrayList<TripEntity> selectedTrips;
+
 
     //setter & getters
     public String getOrigin() {
@@ -67,19 +70,20 @@ public class HomeBean extends BaseBean {
     }
 
     public ArrayList<TripEntity> getTripList() {
-
-        TripManager tm = TripManager.start();
-
-        tripList = new ArrayList<>(
-                tm.getUserTrips(getActiveUser()));
-
-        tm.stop();
-
+        if(tripList == null || tripList.isEmpty()) updateTripList();
         return tripList;
     }
 
     public void setTripList(ArrayList<TripEntity> tripList) {
         this.tripList = tripList;
+    }
+
+    public ArrayList<TripEntity> getSelectedTrips() {
+        return selectedTrips;
+    }
+
+    public void setSelectedTrips(ArrayList<TripEntity> selectedTrips) {
+        this.selectedTrips = selectedTrips;
     }
 
 
@@ -90,6 +94,15 @@ public class HomeBean extends BaseBean {
         distance=0;
         date=null;
         validTrip = false;
+    }
+
+    public void updateTripList() {
+        TripManager tm = TripManager.start();
+
+        tripList = new ArrayList<>(
+                tm.getAllTrips());
+
+        tm.stop();
     }
 
     public void calculateDistance() {
@@ -138,5 +151,28 @@ public class HomeBean extends BaseBean {
         tm.stop();
 
         resetValues();
+
+        updateTripList();
     }
+
+    public void deleteSelectedTrips(){
+
+        if (selectedTrips == null || selectedTrips.isEmpty()) {
+            provideMessage("Info", "Bitte zu löschende Fahrten auswählen");
+            return;
+        }
+
+        TripManager tm = TripManager.start();
+
+        for(TripEntity trip: selectedTrips){
+            tm.deleteTrip(trip.getTripId());
+        }
+
+        tm.stop();
+
+        updateTripList();
+
+        selectedTrips = null;
+    }
+
 }
