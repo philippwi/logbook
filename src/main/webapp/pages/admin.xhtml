@@ -17,11 +17,14 @@
 </h:head>
 
 <h:body>
-
-    <p:growl id="growl" sticky="true" showDetail="true" life="3000"/>
-
-    <p:outputLabel styleClass="userLabel" value="Aktueller Nutzer: #{adminBean.activeUser}"/>
-
+    <br/>
+    <div class="header">
+        <p:outputLabel>Fahrtenbuch</p:outputLabel>
+    </div>
+    <br/> <br/>
+    <div class="userLabel">
+        <p:outputLabel value="Aktueller Nutzer: #{adminBean.activeUser}"/>
+    </div>
     <h:form>
         <p:commandButton styleClass="navButtonLeft"
                          id="logoutButton"
@@ -35,6 +38,7 @@
 
     <br/><br/>
 
+    <p:growl id="growl" sticky="true" showDetail="true" life="3000"/>
     <h:form>
         <p:dataTable styleClass="userTable centeredElement centeredText"
                      id="userTable"
@@ -75,9 +79,10 @@
     </h:form>
 
     <br/><br/>
+    <br/><br/>
 
     <h:form>
-        <p:dataTable styleClass="centeredElement centeredText"
+        <p:dataTable styleClass="tripTableAdmin centeredElement centeredText"
                      id="tripTable"
                      var="trip"
                      widgetVar="tripsTableVar"
@@ -89,11 +94,6 @@
             </f:facet>
             <p:column styleClass="selectColumn" selectionMode="multiple"/>
             <p:column filterBy="#{trip.tripId}" headerText="ID" filterMatchMode="exact">
-                <f:facet name="filter">
-                    <p:spinner onchange="PF('tripsTableVar').filter()">
-                        <f:converter converterId="javax.faces.Integer" />
-                    </p:spinner>
-                </f:facet>
                 <h:outputText value="#{trip.tripId}"/>
             </p:column>
             <p:column filterBy="#{trip.user}" headerText="Nutzer" filterMatchMode="contains">
@@ -124,5 +124,6 @@
             </f:facet>
         </p:dataTable>
     </h:form>
+    <br/><br/><br/><br/><br/><br/>
 </h:body>
 </html>
