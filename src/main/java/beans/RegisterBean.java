@@ -9,6 +9,7 @@ import javax.inject.Named;
 import static config.Configuration.ADMIN_KEY;
 import static utility.Tools.getHash;
 import static utility.Tools.isBlankOrNull;
+import static utility.Tools.isNameValid;
 
 @Named
 @RequestScoped
@@ -68,7 +69,12 @@ public class RegisterBean extends BaseBean {
 
         //check if entered values are valid
         if (isBlankOrNull(username) || isBlankOrNull(pw1) || isBlankOrNull(pw2)) {
-            provideMessage("Info", "Ungültige Eingabewerte");
+            provideMessage("Info", "Ungültige Eingaben");
+            return registerPage;
+        }
+
+        if(!isNameValid(username)){
+            provideMessage("Info", "Bitte nur Buchstaben und Zahlen im Nutzername verwenden");
             return registerPage;
         }
 

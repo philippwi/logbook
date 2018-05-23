@@ -36,7 +36,7 @@ public class LoginBean extends BaseBean {
 
         //check if entered values are valid
         if(isBlankOrNull(username) || isBlankOrNull(password)){
-            provideMessage("Info", "Ungültige Eingabewerte");
+            provideMessage("Info", "Ungültige Eingaben");
             return loginPage;
         }
 
