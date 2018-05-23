@@ -39,7 +39,7 @@
     <br/><br/>
 
     <p:growl id="growl" sticky="true" showDetail="true" life="3000"/>
-    <h:form>
+    <h:form rendered="#{adminBean.admin}">
         <p:dataTable styleClass="userTable centeredElement centeredText"
                      id="userTable"
                      var="user"
@@ -81,7 +81,7 @@
     <br/><br/>
     <br/><br/>
 
-    <h:form>
+    <h:form rendered="#{adminBean.admin}">
         <p:dataTable styleClass="tripTableAdmin centeredElement centeredText"
                      id="tripTable"
                      var="trip"

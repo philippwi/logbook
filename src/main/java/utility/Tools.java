@@ -1,9 +1,15 @@
 package utility;
 
+import sun.misc.BASE64Encoder;
+
+import javax.xml.bind.DatatypeConverter;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.time.LocalDate;
 import java.time.ZoneId;
+import java.util.Base64;
 import java.util.Date;
 
 public final class Tools {
@@ -14,11 +20,18 @@ public final class Tools {
         System.err.println(e.toString());
     }
 
-    public static String getHash(String pw){
+    public static String encrypt(String string) throws NoSuchAlgorithmException {
 
-        if(isBlankOrNull(pw)) return "";
+        if(isBlankOrNull(string)) return "";
 
-        return Integer.toString(pw.hashCode());
+        MessageDigest md = MessageDigest.getInstance("MD5");
+        md.update(string.getBytes());
+        byte[] digest = md.digest();
+
+        String hashedString = DatatypeConverter
+                .printHexBinary(digest).toUpperCase();
+
+        return hashedString;
     }
 
     public static float precisionRound(float value, int places) {

@@ -7,9 +7,7 @@ import javax.enterprise.context.RequestScoped;
 import javax.inject.Named;
 
 import static config.Configuration.ADMIN_KEY;
-import static utility.Tools.getHash;
-import static utility.Tools.isBlankOrNull;
-import static utility.Tools.isNameValid;
+import static utility.Tools.*;
 
 @Named
 @RequestScoped
@@ -103,7 +101,15 @@ public class RegisterBean extends BaseBean {
             return registerPage;
         }
 
-        UserEntity user = new UserEntity(username, getHash(pw1), adminRights);
+        UserEntity user = null;
+        try {
+            user = new UserEntity(username, encrypt(pw1), adminRights);
+        } catch (Exception e) {
+            handleException(e);
+            um.stop();
+            provideMessage("Info", "Interner Fehler bei Passwort-Verschlüsselung");
+            return registerPage;
+        }
 
         um.addUser(user);
 

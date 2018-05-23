@@ -4,7 +4,7 @@ body{
 }
 
 .header{
-    font-family: "Calibri";
+    font-family: "Calibri", sans-serif;
     text-align:center;
     background-color:#606065;
     border-radius: 15px;

@@ -1,13 +1,13 @@
 package beans;
 
-import db.models.UserEntity;
 import db.operation.UserManager;
 
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Named;
 
 import static utility.CookieManagement.setUserCookie;
-import static utility.Tools.getHash;
+import static utility.Tools.encrypt;
+import static utility.Tools.handleException;
 import static utility.Tools.isBlankOrNull;
 
 @Named
@@ -49,10 +49,18 @@ public class LoginBean extends BaseBean {
             return loginPage;
         }
 
-        UserEntity user = um.getUser(username);
-
         //check if password is correct
-        if(!getHash(password).equals(user.getPassword())) {
+        String encryptedPw;
+        try {
+            encryptedPw = encrypt(password);
+        } catch (Exception e) {
+            handleException(e);
+            um.stop();
+            provideMessage("Info", "Interner Fehler bei Passwort-Verschlüsselung");
+            return loginPage;
+        }
+
+        if(!encryptedPw.equals(um.getUser(username).getPassword())) {
             provideMessage("Info", "Passwort nicht korrekt");
             um.stop();
             return loginPage;
