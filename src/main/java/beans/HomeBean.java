@@ -2,7 +2,6 @@ package beans;
 
 import calculation.DistanceProvider;
 import db.models.TripEntity;
-import db.models.UserEntity;
 import db.operation.TripManager;
 
 import javax.enterprise.context.SessionScoped;
@@ -12,9 +11,7 @@ import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Date;
 
-import static utility.Tools.isBlankOrNull;
-import static utility.Tools.isValidDate;
-import static utility.Tools.precisionRound;
+import static utility.Tools.*;
 
 @Named
 @SessionScoped
@@ -70,7 +67,11 @@ public class HomeBean extends BaseBean {
     }
 
     public ArrayList<TripEntity> getTripList() {
-        if(tripList == null || tripList.isEmpty()) updateTripList();
+        if(tripList == null ||
+                tripList.isEmpty() ||
+                !tripList.get(0).getUser().equals(getActiveUser())) {
+            updateTripList();
+        }
         return tripList;
     }
 
@@ -100,7 +101,7 @@ public class HomeBean extends BaseBean {
         TripManager tm = TripManager.start();
 
         tripList = new ArrayList<>(
-                tm.getAllTrips());
+                tm.getUserTrips(getActiveUser()));
 
         tm.stop();
     }

@@ -6,7 +6,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static utility.Tools.handleException;
-import static utility.Tools.isBlankOrNull;
 
 public final class CookieManagement {
 

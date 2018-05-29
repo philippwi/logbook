@@ -1,7 +1,5 @@
 package utility;
 
-import sun.misc.BASE64Encoder;
-
 import javax.xml.bind.DatatypeConverter;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -9,7 +7,6 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.time.LocalDate;
 import java.time.ZoneId;
-import java.util.Base64;
 import java.util.Date;
 
 public final class Tools {

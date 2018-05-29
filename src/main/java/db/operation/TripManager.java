@@ -2,7 +2,6 @@ package db.operation;
 
 import config.Configuration;
 import db.models.TripEntity;
-import javafx.scene.shape.TriangleMesh;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
