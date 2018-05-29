@@ -103,7 +103,7 @@ public class RegisterBean extends BaseBean {
 
         UserEntity user = null;
         try {
-            user = new UserEntity(username, encrypt(pw1), adminRights);
+            user = new UserEntity(username, encryptPw(pw1), adminRights);
         } catch (Exception e) {
             handleException(e);
             um.stop();

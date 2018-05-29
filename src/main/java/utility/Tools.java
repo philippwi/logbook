@@ -1,12 +1,14 @@
 package utility;
 
 import javax.xml.bind.DatatypeConverter;
+import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.time.LocalDate;
 import java.time.ZoneId;
+import java.util.Base64;
 import java.util.Date;
 
 public final class Tools {
@@ -17,7 +19,7 @@ public final class Tools {
         System.err.println(e.toString());
     }
 
-    public static String encrypt(String string) throws NoSuchAlgorithmException {
+    public static String encryptPw(String string) throws NoSuchAlgorithmException {
 
         if(isBlankOrNull(string)) return "";
 
@@ -29,6 +31,28 @@ public final class Tools {
                 .printHexBinary(digest).toUpperCase();
 
         return hashedString;
+    }
+
+    public static String encryptCookie(String string) {
+        byte[] encryptArray = Base64.getEncoder().encode(string.getBytes());
+        String encstr = null;
+        try {
+            encstr = new String(encryptArray,"UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        return encstr;
+    }
+
+    public static String decryptCookie(String string) {
+        byte[] decryptArray = Base64.getDecoder().decode(string);
+        String decstr = null;
+        try {
+            decstr = new String(decryptArray, "UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        return decstr;
     }
 
     public static float precisionRound(float value, int places) {

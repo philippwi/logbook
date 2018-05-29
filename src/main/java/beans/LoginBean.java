@@ -6,7 +6,7 @@ import javax.enterprise.context.RequestScoped;
 import javax.inject.Named;
 
 import static utility.CookieManagement.setUserCookie;
-import static utility.Tools.encrypt;
+import static utility.Tools.encryptPw;
 import static utility.Tools.handleException;
 import static utility.Tools.isBlankOrNull;
 
@@ -52,7 +52,7 @@ public class LoginBean extends BaseBean {
         //check if password is correct
         String encryptedPw;
         try {
-            encryptedPw = encrypt(password);
+            encryptedPw = encryptPw(password);
         } catch (Exception e) {
             handleException(e);
             um.stop();

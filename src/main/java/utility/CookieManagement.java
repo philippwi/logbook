@@ -5,6 +5,8 @@ import javax.servlet.http.Cookie;
 import java.util.HashMap;
 import java.util.Map;
 
+import static utility.Tools.decryptCookie;
+import static utility.Tools.encryptCookie;
 import static utility.Tools.handleException;
 
 public final class CookieManagement {
@@ -16,7 +18,7 @@ public final class CookieManagement {
     public static void setUserCookie(String username){
         FacesContext.getCurrentInstance()
                 .getExternalContext()
-                .addResponseCookie(usercookieName, username, null);
+                .addResponseCookie(usercookieName, encryptCookie(username), null);
     }
 
     public static void deleteUserCookie(){
@@ -38,7 +40,7 @@ public final class CookieManagement {
 
             if (usercookie == null) return "";
 
-            return usercookie.getValue();
+            return decryptCookie(usercookie.getValue());
         }catch (Exception e){
             handleException(e);
 
