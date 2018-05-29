@@ -16,9 +16,10 @@ public class TripEntity implements Serializable {
     private LocalDate date;
 
 
-    public TripEntity(){}
+    public TripEntity() {
+    }
 
-    public TripEntity(String usr, String org, String dest, float dist, LocalDate dt){
+    public TripEntity(String usr, String org, String dest, float dist, LocalDate dt) {
         setUser(usr);
         setOrigin(org);
         setDestination(dest);
@@ -26,7 +27,7 @@ public class TripEntity implements Serializable {
         setDate(dt);
     }
 
-    public TripEntity(int id, String usr, String org, String dest, float dist, LocalDate dt){
+    public TripEntity(int id, String usr, String org, String dest, float dist, LocalDate dt) {
         setTripId(id);
         setUser(usr);
         setOrigin(org);
@@ -34,6 +35,7 @@ public class TripEntity implements Serializable {
         setDistance(dist);
         setDate(dt);
     }
+
     @Id
     @Column(name = "TripID", nullable = false)
     public int getTripId() {
@@ -114,8 +116,8 @@ public class TripEntity implements Serializable {
     }
 
     @Override
-    public String toString(){
+    public String toString() {
         return "(" + tripId + ", " + user + ", " + origin + ", " +
-                destination+ ", " + distance + ", " + date + ")";
+                destination + ", " + distance + ", " + date + ")";
     }
 }

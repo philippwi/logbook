@@ -3,7 +3,9 @@ package db.operation;
 import config.Configuration;
 import db.models.UserEntity;
 
-import javax.persistence.*;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 import java.util.List;
 
 
@@ -12,27 +14,27 @@ public class UserManager {
     private EntityManagerFactory emFactory;
     private EntityManager em;
 
-    private UserManager(){
+    private UserManager() {
         emFactory = Persistence.createEntityManagerFactory(Configuration.PERSISTENCE_UNIT_NAME);
     }
 
-    private void createEM(){
+    private void createEM() {
         em = emFactory.createEntityManager();
     }
 
-    private void closeEM(){
-       em.close();
+    private void closeEM() {
+        em.close();
     }
 
-    public static UserManager start(){
+    public static UserManager start() {
         return new UserManager();
     }
 
-    public void stop(){
+    public void stop() {
         emFactory.close();
     }
 
-    public List<UserEntity> getAllUsers(){
+    public List<UserEntity> getAllUsers() {
 
         createEM();
 
@@ -46,7 +48,7 @@ public class UserManager {
         return userList;
     }
 
-    public UserEntity getUser(String username){
+    public UserEntity getUser(String username) {
 
         UserEntity user;
 
@@ -86,6 +88,8 @@ public class UserManager {
 
         UserEntity user = em.find(UserEntity.class, username);
 
+        if (user == null) return false;
+
         em.getTransaction().begin();
         em.remove(user);
         em.getTransaction().commit();
@@ -95,7 +99,7 @@ public class UserManager {
         return true;
     }
 
-    public boolean userExists(String username){
+    public boolean userExists(String username) {
 
         long usrCount;
 
@@ -109,8 +113,7 @@ public class UserManager {
 
         closeEM();
 
-        if(usrCount == 0) {return false;}
-        else {return true;}
+        return usrCount != 0;
     }
 
 }

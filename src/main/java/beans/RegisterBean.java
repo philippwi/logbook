@@ -16,7 +16,6 @@ public class RegisterBean extends BaseBean {
     private String username;
     private String pw1;
     private String pw2;
-    private String msg;
     private String adminKey;
 
     //setters & getters
@@ -44,14 +43,6 @@ public class RegisterBean extends BaseBean {
         pw2 = pw;
     }
 
-    public String getMsg() {
-        return msg;
-    }
-
-    public void setMsg(String msg) {
-        this.msg = msg;
-    }
-
     public String getAdminKey() {
         return adminKey;
     }
@@ -71,7 +62,7 @@ public class RegisterBean extends BaseBean {
             return registerPage;
         }
 
-        if(!isNameValid(username)){
+        if (!isNameValid(username)) {
             provideMessage("Info", "Bitte nur Buchstaben und Zahlen im Nutzername verwenden");
             return registerPage;
         }
@@ -83,12 +74,11 @@ public class RegisterBean extends BaseBean {
         }
 
         //check if correct admin key was entered
-        if(!isBlankOrNull(adminKey)){
-            if(!adminKey.equals(ADMIN_KEY)){
+        if (!isBlankOrNull(adminKey)) {
+            if (!adminKey.equals(ADMIN_KEY)) {
                 provideMessage("Info", "Administrator-Schlüssel ungültig");
                 return registerPage;
-            }
-            else{
+            } else {
                 adminRights = 1;
             }
         }
@@ -101,7 +91,7 @@ public class RegisterBean extends BaseBean {
             return registerPage;
         }
 
-        UserEntity user = null;
+        UserEntity user;
         try {
             user = new UserEntity(username, encryptPw(pw1), adminRights);
         } catch (Exception e) {

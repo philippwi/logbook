@@ -13,15 +13,16 @@ import java.util.Date;
 
 public final class Tools {
 
-    private Tools(){}
+    private Tools() {
+    }
 
-    public static void handleException(Exception e){
+    public static void handleException(Exception e) {
         System.err.println(e.toString());
     }
 
     public static String encryptPw(String string) throws NoSuchAlgorithmException {
 
-        if(isBlankOrNull(string)) return "";
+        if (isBlankOrNull(string)) return "";
 
         MessageDigest md = MessageDigest.getInstance("MD5");
         md.update(string.getBytes());
@@ -37,7 +38,7 @@ public final class Tools {
         byte[] encryptArray = Base64.getEncoder().encode(string.getBytes());
         String encstr = null;
         try {
-            encstr = new String(encryptArray,"UTF-8");
+            encstr = new String(encryptArray, "UTF-8");
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
@@ -63,36 +64,39 @@ public final class Tools {
         return bd.floatValue();
     }
 
-    public static boolean isBlankOrNull(String s){
+    public static boolean isBlankOrNull(String s) {
 
         //check if parameter is null
-        if(s == null) return true;
+        if (s == null) return true;
 
         //check if string is empty
-        if(s.isEmpty()) return true;
+        if (s.isEmpty()) return true;
 
         //check if string consists of whitespaces only
-        if(s.trim().isEmpty()) return true;
+        if (s.trim().isEmpty()) return true;
 
         //after all checks are negative
         return false;
 
     }
 
-    public static boolean isValidDate(Date dt){
+    public static boolean isValidDate(Date dt) {
 
-        if(dt == null) return false;
+        if (dt == null) return false;
 
         LocalDate date = dt.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
 
-        if(date.isBefore(LocalDate.parse("1900-01-01"))) return false;
+        if (date.isBefore(LocalDate.parse("1900-01-01"))) return false;
 
-        if(date.isAfter(LocalDate.now().plusDays(1))) return false;
+        if (date.isAfter(LocalDate.now().plusDays(1))) return false;
 
         return true;
     }
 
-    public static boolean isNameValid(String name){
-       return name.matches("[a-zA-Z0-9]*");
+    public static boolean isNameValid(String name) {
+        if (isBlankOrNull(name)) return false;
+        if (name.length() > 45) return false;
+
+        return name.matches("[a-zA-Z0-9]*");
     }
 }

@@ -21,12 +21,12 @@ public class AdminBean extends BaseBean {
     private ArrayList<TripEntity> selectedTrips;
 
     public ArrayList<UserEntity> getUserList() {
-        if(userList == null || userList.isEmpty()) updateUserList();
+        if (userList == null || userList.isEmpty()) updateUserList();
         return userList;
     }
 
     public ArrayList<TripEntity> getTripList() {
-        if(tripList == null || tripList.isEmpty()) updateTripList();
+        if (tripList == null || tripList.isEmpty()) updateTripList();
         return tripList;
     }
 
@@ -64,7 +64,7 @@ public class AdminBean extends BaseBean {
         tm.stop();
     }
 
-    public void deleteSelectedUsers(){
+    public void deleteSelectedUsers() {
 
         if (selectedUsers == null || selectedUsers.isEmpty()) {
             provideMessage("Info", "Bitte zu löschende Nutzer auswählen");
@@ -73,7 +73,7 @@ public class AdminBean extends BaseBean {
 
         UserManager um = UserManager.start();
 
-        for(UserEntity user: selectedUsers){
+        for (UserEntity user : selectedUsers) {
             um.deleteUser(user.getName());
         }
 
@@ -84,7 +84,7 @@ public class AdminBean extends BaseBean {
         selectedUsers = null;
     }
 
-    public void deleteSelectedTrips(){
+    public void deleteSelectedTrips() {
 
         if (selectedTrips == null || selectedTrips.isEmpty()) {
             provideMessage("Info", "Bitte zu löschende Fahrten auswählen");
@@ -93,7 +93,7 @@ public class AdminBean extends BaseBean {
 
         TripManager tm = TripManager.start();
 
-        for(TripEntity trip: selectedTrips){
+        for (TripEntity trip : selectedTrips) {
             tm.deleteTrip(trip.getTripId());
         }
 

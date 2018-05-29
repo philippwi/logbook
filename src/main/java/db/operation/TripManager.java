@@ -13,27 +13,27 @@ public class TripManager {
     private EntityManagerFactory emFactory;
     private EntityManager em;
 
-    private TripManager(){
+    private TripManager() {
         emFactory = Persistence.createEntityManagerFactory(Configuration.PERSISTENCE_UNIT_NAME);
     }
 
-    private void createEM(){
+    private void createEM() {
         em = emFactory.createEntityManager();
     }
 
-    private void closeEM(){
+    private void closeEM() {
         em.close();
     }
 
-    public static TripManager start(){
+    public static TripManager start() {
         return new TripManager();
     }
 
-    public void stop(){
+    public void stop() {
         emFactory.close();
     }
 
-    public List<TripEntity> getAllTrips(){
+    public List<TripEntity> getAllTrips() {
 
         createEM();
 
@@ -46,7 +46,8 @@ public class TripManager {
 
         return tripList;
     }
-    public List<TripEntity> getUserTrips(String username){
+
+    public List<TripEntity> getUserTrips(String username) {
 
         createEM();
 
@@ -59,19 +60,6 @@ public class TripManager {
         closeEM();
 
         return tripList;
-    }
-
-    public TripEntity getTrip(int id){
-
-        TripEntity trip;
-
-        createEM();
-
-        trip = em.find(TripEntity.class, id);
-
-        closeEM();
-
-        return trip;
     }
 
     public boolean addTrip(TripEntity trip) {
@@ -92,6 +80,8 @@ public class TripManager {
         createEM();
 
         TripEntity trip = em.find(TripEntity.class, id);
+
+        if (trip == null) return false;
 
         em.getTransaction().begin();
         em.remove(trip);

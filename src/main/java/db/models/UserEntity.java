@@ -11,13 +11,15 @@ public class UserEntity implements Serializable {
     private String password;
     private byte admin;
 
-    public UserEntity(){}
+    public UserEntity() {
+    }
 
-    public UserEntity(String nm, String pw, byte adm){
+    public UserEntity(String nm, String pw, byte adm) {
         setName(nm);
         setPassword(pw);
         setAdmin(adm);
     }
+
     @Id
     @Column(name = "Name", nullable = false, length = 45)
     public String getName() {
@@ -65,7 +67,7 @@ public class UserEntity implements Serializable {
     }
 
     @Override
-    public String toString(){
+    public String toString() {
         return "(" + name + ", " + password + ", " + admin + ")";
     }
 }

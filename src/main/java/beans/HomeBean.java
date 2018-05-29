@@ -67,7 +67,7 @@ public class HomeBean extends BaseBean {
     }
 
     public ArrayList<TripEntity> getTripList() {
-        if(tripList == null ||
+        if (tripList == null ||
                 tripList.isEmpty() ||
                 !tripList.get(0).getUser().equals(getActiveUser())) {
             updateTripList();
@@ -89,11 +89,11 @@ public class HomeBean extends BaseBean {
 
 
     //methods
-    private void resetValues(){
-        origin =null;
-        destination=null;
-        distance=0;
-        date=null;
+    private void resetValues() {
+        origin = null;
+        destination = null;
+        distance = 0;
+        date = null;
         validTrip = false;
     }
 
@@ -108,7 +108,7 @@ public class HomeBean extends BaseBean {
 
     public void calculateDistance() {
 
-        if(isBlankOrNull(origin) || isBlankOrNull(destination)){
+        if (isBlankOrNull(origin) || isBlankOrNull(destination)) {
             provideMessage("Info", "Bitte Start- und Zielort eingeben!");
             return;
         }
@@ -123,23 +123,23 @@ public class HomeBean extends BaseBean {
                     1);
 
             validTrip = true;
-        }catch (Exception ignored){
+        } catch (Exception ignored) {
             provideMessage("Info", "Fehler bei der Berechnung. Bitte eingegebene Orte auf Korrektheit prüfen!");
         }
     }
 
     public void saveIntoDB() {
 
-        if(distance == 0 || isBlankOrNull(origin) || isBlankOrNull(destination)){
+        if (distance == 0 || isBlankOrNull(origin) || isBlankOrNull(destination)) {
             provideMessage("Info", "Bitte erst alle Felder ausfüllen und Distanz berechnen lassen");
             return;
         }
 
-        if(origin.length() > 45 || destination.length() > 45){
+        if (origin.length() > 45 || destination.length() > 45) {
             provideMessage("Info", "Ortseingaben dürfen maximal 45 Zeichen lang sein!");
             return;
         }
-        if(!isValidDate(date)){
+        if (!isValidDate(date)) {
             provideMessage("Info", "Datum ungültig");
             return;
         }
@@ -156,7 +156,7 @@ public class HomeBean extends BaseBean {
         updateTripList();
     }
 
-    public void deleteSelectedTrips(){
+    public void deleteSelectedTrips() {
 
         if (selectedTrips == null || selectedTrips.isEmpty()) {
             provideMessage("Info", "Bitte zu löschende Fahrten auswählen");
@@ -165,7 +165,7 @@ public class HomeBean extends BaseBean {
 
         TripManager tm = TripManager.start();
 
-        for(TripEntity trip: selectedTrips){
+        for (TripEntity trip : selectedTrips) {
             tm.deleteTrip(trip.getTripId());
         }
 

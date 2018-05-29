@@ -7,7 +7,6 @@ import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
-
 import java.io.Serializable;
 
 import static config.Configuration.*;
@@ -38,6 +37,7 @@ public class BaseBean implements Serializable {
     public String getWebpageURL() {
         return webpageURL;
     }
+
     public String getLoginPage() {
         return loginPage;
     }
@@ -49,6 +49,7 @@ public class BaseBean implements Serializable {
     public String getHomePage() {
         return homePage;
     }
+
     public String getAdminPage() {
         return adminPage;
     }
@@ -71,7 +72,7 @@ public class BaseBean implements Serializable {
 
         String username = getActiveUser();
 
-        if(isBlankOrNull(username)){
+        if (isBlankOrNull(username)) {
             admin = false;
             return admin;
         }
@@ -88,14 +89,16 @@ public class BaseBean implements Serializable {
     }
 
     void provideMessage(String title, String msg) {
-        FacesContext context = FacesContext.getCurrentInstance();
-        context.addMessage(null, new FacesMessage(title, msg));
+        try {
+            FacesContext context = FacesContext.getCurrentInstance();
+            context.addMessage(null, new FacesMessage(title, msg));
+        } catch (Exception ignored) {/*shouldn't bother user*/}
     }
 
 
-    public String doLogout(){
+    public String doLogout() {
 
-        if(!isBlankOrNull(getActiveUser())) deleteUserCookie();
+        if (!isBlankOrNull(getActiveUser())) deleteUserCookie();
 
         return loginPage;
     }
