@@ -15,11 +15,12 @@
     <h:outputStylesheet library="css" name="stylesheet.css"/>
 </h:head>
 
-<h:body>
+<h:body style="background: url(../images/#{backgroundBean.image}) no-repeat scroll center top transparent">
     <br/>
     <div class="header">
-        <h:outputLabel>Fahrtenbuch</h:outputLabel>
+        <h:outputLabel style="color: #{backgroundBean.headerColor}">Fahrtenbuch</h:outputLabel>
     </div>
+
     <br/> <br/>
     <h:form id="registerForm">
         <p:growl id="growl" sticky="true" showDetail="true" life="3000"/>

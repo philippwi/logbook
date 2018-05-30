@@ -15,20 +15,29 @@
     <h:outputStylesheet library="css" name="stylesheet.css"/>
 </h:head>
 
-<h:body>
+<h:body style="background: url(../images/#{backgroundBean.image}) no-repeat scroll center top transparent">
     <br/>
     <div class="header">
-        <h:outputLabel>Fahrtenbuch</h:outputLabel>
+        <h:outputLabel style="color: #{backgroundBean.headerColor}">Fahrtenbuch</h:outputLabel>
     </div>
+
+    <br/>
+    <h:form style="text-align: center">
+        <h:commandButton styleClass="ui-button ui-state-default ui-corner-all ui-button-text-only"
+                         value="Hintergrund ändern" action="backgroundChange"/>
+    </h:form>
+
     <br/> <br/>
     <h:form id="loginForm">
         <p:growl id="growl" sticky="true" showDetail="true" life="3000"/>
         <p:panelGrid styleClass="centeredElement centeredText" id="panelGrid" columns="2" cellpadding="5">
             <p:outputLabel for="usernameInput" value="Username"/>
-            <p:inputText styleClass="fullCell" id="usernameInput" value="#{loginBean.username}" required="true" maxlength="30"/>
+            <p:inputText styleClass="fullCell" id="usernameInput" value="#{loginBean.username}" required="true"
+                         maxlength="30"/>
 
             <p:outputLabel for="pwInput" value="Passwort"/>
-            <p:password styleClass="fullCell" id="pwInput" value="#{loginBean.password}" required="true" maxlength="30"/>
+            <p:password styleClass="fullCell" id="pwInput" value="#{loginBean.password}" required="true"
+                        maxlength="30"/>
 
             <f:facet name="footer">
                 <p:commandButton styleClass="fullCell"
@@ -41,8 +50,8 @@
     </h:form>
     <br/>
 
-<div class="centeredText">
+    <div class="centeredText">
         <p:button value="Zur Registrierung" outcome="#{loginBean.registerPage}"/>
-</div>
+    </div>
 </h:body>
 </html>

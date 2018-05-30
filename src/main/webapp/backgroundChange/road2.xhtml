@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="de"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+<head>
+    <title>Road 2</title>
+</head>
+<body style="text-align: center" background="../images/road2.jpg">
+<br/><br/>
+<h:form>
+    <h:commandButton value="Annehmen" action="cancel">
+        <f:actionListener binding="#{backgroundBean.changeImage('road2.jpg')}"/>
+        <f:actionListener binding="#{backgroundBean.changeHeaderColor('#D9F5F9')}"/>
+    </h:commandButton>
+</h:form>
+<br/>
+<h:form>
+    <h:commandButton value="Abbrechen" action="selectBackground"/>
+</h:form>
+</body>
+</html>
