@@ -88,6 +88,15 @@ public class AdminBean extends BaseBean {
             return;
         }
 
+        String currentUser = getActiveUser();
+
+        for (UserEntity u : selectedUsers) {
+            if (currentUser.equals(u.getName())) {
+                provideMessage("Info", "Löschen des eigenen Accounts ist nicht möglich");
+                return;
+            }
+        }
+
         UserManager um = UserManager.start();
 
         for (UserEntity user : selectedUsers) {
