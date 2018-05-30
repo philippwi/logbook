@@ -8,6 +8,8 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import java.util.List;
 
+import static utility.Tools.handleException;
+
 
 public class UserManager {
 
@@ -18,22 +20,43 @@ public class UserManager {
         emFactory = Persistence.createEntityManagerFactory(Configuration.PERSISTENCE_UNIT_NAME);
     }
 
+    /**
+     * Creates a new EntityManager instance referenced by the em variable.
+     */
     private void createEM() {
         em = emFactory.createEntityManager();
     }
 
+    /**
+     * Closes the EntityManager after it is not needed any longer.
+     */
     private void closeEM() {
         em.close();
     }
 
+    /**
+     * Creates a new instance of UserManager.
+     *
+     * @return new UserManager instance
+     */
     public static UserManager start() {
         return new UserManager();
     }
 
+    /**
+     * Closes the EntityManagerFactory. Should be executed
+     * when the UserManager is not needed any longer.
+     */
     public void stop() {
         emFactory.close();
     }
 
+    /**
+     * Reads all user records from the database and returns
+     * them as a list.
+     *
+     * @return all stored users
+     */
     public List<UserEntity> getAllUsers() {
 
         createEM();
@@ -48,36 +71,63 @@ public class UserManager {
         return userList;
     }
 
+    /**
+     * Reads data of a specific user from the database.
+     *
+     * @param username name of the user whose data should be returned
+     * @return result of the search
+     */
     public UserEntity getUser(String username) {
 
         UserEntity user;
 
-        createEM();
+        try {
+            createEM();
 
-        user = em.find(UserEntity.class, username);
+            user = em.find(UserEntity.class, username);
 
-        closeEM();
+            closeEM();
 
+        } catch (Exception e) {
+            handleException(e);
+            user = null;
+        }
         return user;
     }
 
+    /**
+     * Writes a given user entity into the database.
+     *
+     * @param user user element to be stored
+     * @return status of the operation
+     */
     public boolean addUser(UserEntity user) {
 
         if (userExists(user.getName())) {
             return false;
         }
 
-        createEM();
+        try {
+            createEM();
 
-        em.getTransaction().begin();
-        em.persist(user);
-        em.getTransaction().commit();
+            em.getTransaction().begin();
+            em.persist(user);
+            em.getTransaction().commit();
 
-        closeEM();
-
+            closeEM();
+        } catch (Exception e) {
+            handleException(e);
+            return false;
+        }
         return true;
     }
 
+    /**
+     * Deletes user with the given name from the database.
+     *
+     * @param username name of the user
+     * @return success of the operation
+     */
     public boolean deleteUser(String username) {
 
         if (!userExists(username)) {
@@ -99,6 +149,13 @@ public class UserManager {
         return true;
     }
 
+    /**
+     * Checks if a user with the given name already exists
+     * in the database.
+     *
+     * @param username name of the user
+     * @return whether or not user exists
+     */
     public boolean userExists(String username) {
 
         long usrCount;

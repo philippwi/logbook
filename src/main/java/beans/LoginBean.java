@@ -12,10 +12,14 @@ import static utility.Tools.*;
 @RequestScoped
 public class LoginBean extends BaseBean {
 
+    //----- variables ------
+
     private String username;
     private String password;
 
-    //setters & getters
+
+    //----- getters & setters ------
+
     public String getUsername() {
         return username;
     }
@@ -32,7 +36,14 @@ public class LoginBean extends BaseBean {
         password = pw;
     }
 
-    //methods
+    //----- methods ------
+
+    /**
+     * Validates user input. If the input is valid the user will be
+     * logged in with the respective credentials.
+     *
+     * @return URL of a page to redirect to depending on validity of the user input
+     */
     public String tryLogin() {
 
         //check if entered values are valid

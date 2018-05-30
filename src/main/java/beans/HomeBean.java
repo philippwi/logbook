@@ -17,6 +17,8 @@ import static utility.Tools.*;
 @SessionScoped
 public class HomeBean extends BaseBean {
 
+    //----- variables ------
+
     private String origin;
     private String destination;
     private float distance;
@@ -29,7 +31,8 @@ public class HomeBean extends BaseBean {
     private ArrayList<TripEntity> selectedTrips;
 
 
-    //setter & getters
+    //----- getters & setters ------
+
     public String getOrigin() {
         return origin;
     }
@@ -88,7 +91,11 @@ public class HomeBean extends BaseBean {
     }
 
 
-    //methods
+    //----- methods ------
+
+    /**
+     * Resets all variables of this instance to clear input fields.
+     */
     private void resetValues() {
         origin = null;
         destination = null;
@@ -97,6 +104,9 @@ public class HomeBean extends BaseBean {
         validTrip = false;
     }
 
+    /**
+     * Updates the tripList variable with records from the database.
+     */
     public void updateTripList() {
         TripManager tm = TripManager.start();
 
@@ -106,6 +116,14 @@ public class HomeBean extends BaseBean {
         tm.stop();
     }
 
+    /**
+     * Validates user input and - if valid - calls DistanceProvider to
+     * calculate distance between the places provided by the variables
+     * origin and destination.
+     * <p>
+     * If the calculation was successful variable validTrip is set to
+     * true to allow writing into database.
+     */
     public void calculateDistance() {
 
         if (isBlankOrNull(origin) || isBlankOrNull(destination)) {
@@ -128,6 +146,9 @@ public class HomeBean extends BaseBean {
         }
     }
 
+    /**
+     * Validates user input and - if valid - writes trip entity into database.
+     */
     public void saveIntoDB() {
 
         if (distance == 0 || isBlankOrNull(origin) || isBlankOrNull(destination)) {
@@ -156,6 +177,10 @@ public class HomeBean extends BaseBean {
         updateTripList();
     }
 
+    /**
+     * Deletes the trip entities contained in the selectedTrips variable
+     * from the database.
+     */
     public void deleteSelectedTrips() {
 
         if (selectedTrips == null || selectedTrips.isEmpty()) {

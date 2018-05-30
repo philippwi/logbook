@@ -13,12 +13,16 @@ import java.util.ArrayList;
 @SessionScoped
 public class AdminBean extends BaseBean {
 
+    //----- variables ------
+
     private ArrayList<UserEntity> userList;
     private ArrayList<TripEntity> tripList;
 
     private ArrayList<UserEntity> selectedUsers;
-
     private ArrayList<TripEntity> selectedTrips;
+
+
+    //----- getters & setters ------
 
     public ArrayList<UserEntity> getUserList() {
         if (userList == null || userList.isEmpty()) updateUserList();
@@ -46,6 +50,12 @@ public class AdminBean extends BaseBean {
         this.selectedTrips = selectedTrips;
     }
 
+
+    //----- methods ------
+
+    /**
+     * Updates the userList variable with records from the database.
+     */
     public void updateUserList() {
         UserManager um = UserManager.start();
 
@@ -55,6 +65,9 @@ public class AdminBean extends BaseBean {
         um.stop();
     }
 
+    /**
+     * Updates the tripList variable with records from the database.
+     */
     public void updateTripList() {
         TripManager tm = TripManager.start();
 
@@ -64,6 +77,10 @@ public class AdminBean extends BaseBean {
         tm.stop();
     }
 
+    /**
+     * Deletes the user entities contained in the selectedUsers variable
+     * from the database.
+     */
     public void deleteSelectedUsers() {
 
         if (selectedUsers == null || selectedUsers.isEmpty()) {
@@ -84,6 +101,10 @@ public class AdminBean extends BaseBean {
         selectedUsers = null;
     }
 
+    /**
+     * Deletes the trip entities contained in the selectedTrips variable
+     * from the database.
+     */
     public void deleteSelectedTrips() {
 
         if (selectedTrips == null || selectedTrips.isEmpty()) {

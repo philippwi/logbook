@@ -13,12 +13,16 @@ import static utility.Tools.*;
 @RequestScoped
 public class RegisterBean extends BaseBean {
 
+    //----- getters & setters ------
+
     private String username;
     private String pw1;
     private String pw2;
     private String adminKey;
 
-    //setters & getters
+
+    //----- getters & setters ------
+
     public String getUsername() {
         return username;
     }
@@ -51,7 +55,16 @@ public class RegisterBean extends BaseBean {
         this.adminKey = adminKey;
     }
 
-    //methods
+
+    //----- methods ------
+
+    /**
+     * Validates user input. If the input is valid the data will be stored
+     * as a new user record in the database effectively creating a new
+     * user.
+     *
+     * @return URL of a page to redirect to depending on validity of the user input
+     */
     public String tryRegister() {
 
         byte adminRights = 0;

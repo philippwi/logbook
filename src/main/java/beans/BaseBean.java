@@ -18,6 +18,8 @@ import static utility.Tools.isBlankOrNull;
 @RequestScoped
 public class BaseBean implements Serializable {
 
+    //----- variables & constants ------
+
     private final String googleApiKey = GOOGLE_API_KEY;
 
     final String webpageURL = WEBPAGE_URL;
@@ -29,6 +31,9 @@ public class BaseBean implements Serializable {
     private String activeUser;
 
     private boolean admin;
+
+
+    //----- getters & setters ------
 
     public String getGoogleApiKey() {
         return googleApiKey;
@@ -88,14 +93,29 @@ public class BaseBean implements Serializable {
         return admin;
     }
 
+
+    //----- methods ------
+
+    /**
+     * Passes a message to the user interface by providing data for
+     * the Growl function of Primefaces which will display the message
+     * as a small pop-up.
+     *
+     * @param title Header/category of the message
+     * @param msg   Body/content of the message
+     */
     void provideMessage(String title, String msg) {
         try {
             FacesContext context = FacesContext.getCurrentInstance();
             context.addMessage(null, new FacesMessage(title, msg));
-        } catch (Exception ignored) {/*shouldn't bother user*/}
+        } catch (Exception ignored) {/*shouldn't bother the user*/}
     }
 
-
+    /**
+     * Signs out currently logged in user.
+     *
+     * @return URL of the login page
+     */
     public String doLogout() {
 
         if (!isBlankOrNull(getActiveUser())) deleteUserCookie();

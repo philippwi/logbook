@@ -15,7 +15,6 @@ public class TripEntity implements Serializable {
     private float distance;
     private LocalDate date;
 
-
     public TripEntity() {
     }
 

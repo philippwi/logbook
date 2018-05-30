@@ -11,11 +11,20 @@ import static utility.Tools.handleException;
 
 public class DistanceProvider {
 
-    private static final GeoApiContext context =  new GeoApiContext.Builder().apiKey(GOOGLE_API_KEY).build();
+    private static final GeoApiContext context = new GeoApiContext.Builder().apiKey(GOOGLE_API_KEY).build();
 
-    public DistanceProvider() {}
+    public DistanceProvider() {
+    }
 
-    public long getDistance(String origin, String destination){
+    /**
+     * Calculates the distance between two places using the
+     * DistanceMatrixApi from Google.
+     *
+     * @param origin      name of the starting point
+     * @param destination name of the destination point
+     * @return distance in meters
+     */
+    public long getDistance(String origin, String destination) {
         DistanceMatrixApiRequest rq = new DistanceMatrixApiRequest(context);
         DistanceMatrix matrix = null;
 
@@ -26,10 +35,11 @@ public class DistanceProvider {
                     .avoid(DirectionsApi.RouteRestriction.FERRIES)
                     .language("de-DE")
                     .await();
-        } catch (Exception e) {
-           handleException(e);
-        }
-        return matrix.rows[0].elements[0].distance.inMeters;
-    }
 
+            return matrix.rows[0].elements[0].distance.inMeters;
+        } catch (Exception e) {
+            handleException(e);
+            return 0;
+        }
+    }
 }
