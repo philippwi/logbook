@@ -128,6 +128,7 @@ public class HomeBean extends BaseBean {
 
         if (isBlankOrNull(origin) || isBlankOrNull(destination)) {
             provideMessage("Info", "Bitte Start- und Zielort eingeben!");
+            validTrip = false;
             return;
         }
 
@@ -136,6 +137,12 @@ public class HomeBean extends BaseBean {
 
             int distanceInMeters = (int) dp.getDistance(origin, destination);
 
+            if (distanceInMeters == 0) {
+                provideMessage("Info", "Distanz beträgt 0. Bitte eigegebene Orte prüfen!");
+                validTrip = false;
+                return;
+            }
+
             distance = precisionRound(
                     distanceInMeters / (float) 1000.0,
                     1);
@@ -143,6 +150,7 @@ public class HomeBean extends BaseBean {
             validTrip = true;
         } catch (Exception ignored) {
             provideMessage("Info", "Fehler bei der Berechnung. Bitte eingegebene Orte auf Korrektheit prüfen!");
+            validTrip = false;
         }
     }
 
