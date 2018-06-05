@@ -28,6 +28,7 @@ Passwort:   12345
 
 Commands to initialize database structure can be found in sql/setupDatabase.sql
 
+
 ----------------------------------------------------------------------------
 
 
