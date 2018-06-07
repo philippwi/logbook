@@ -138,7 +138,7 @@ public class HomeBean extends BaseBean {
             int distanceInMeters = (int) dp.getDistance(origin, destination);
 
             if (distanceInMeters == 0) {
-                provideMessage("Info", "Distanz beträgt 0. Bitte eigegebene Orte prüfen!");
+                provideMessage("Info", "Bitte eigegebene Orte prüfen!");
                 validTrip = false;
                 return;
             }
