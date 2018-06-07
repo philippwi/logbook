@@ -56,7 +56,7 @@ public class TripEntity implements Serializable {
     }
 
     @Basic
-    @Column(name = "Origin", nullable = false, length = 45)
+    @Column(name = "Origin", nullable = false, length = 200)
     public String getOrigin() {
         return origin;
     }
@@ -66,7 +66,7 @@ public class TripEntity implements Serializable {
     }
 
     @Basic
-    @Column(name = "Destination", nullable = false, length = 45)
+    @Column(name = "Destination", nullable = false, length = 200)
     public String getDestination() {
         return destination;
     }
