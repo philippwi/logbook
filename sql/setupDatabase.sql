@@ -9,8 +9,8 @@ CREATE TABLE `logbook`.`user` (
 CREATE TABLE `logbook`.`trip` (
   `TripID` INT NOT NULL AUTO_INCREMENT,
   `User` VARCHAR(45) NOT NULL,
-  `Origin` VARCHAR(45) NOT NULL,
-  `Destination` VARCHAR(45) NOT NULL,
+  `Origin` VARCHAR(200) NOT NULL,
+  `Destination` VARCHAR(200) NOT NULL,
   `Distance` FLOAT(6,1) NOT NULL,
   `Date` DATE NOT NULL,
   PRIMARY KEY (`TripID`));

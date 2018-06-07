@@ -164,8 +164,8 @@ public class HomeBean extends BaseBean {
             return;
         }
 
-        if (origin.length() > 45 || destination.length() > 45) {
-            provideMessage("Info", "Ortseingaben dürfen maximal 45 Zeichen lang sein!");
+        if (origin.length() > 200 || destination.length() > 200) {
+            provideMessage("Info", "Ortseingaben dürfen maximal 200 Zeichen lang sein!");
             return;
         }
         if (!isValidDate(date)) {
